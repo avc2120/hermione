@@ -1,0 +1,8 @@
+get-pip.py
+venv
+my.properties
+source.sh
+*.pyc
+__pycache__
+here_test.jpg
+.DS_Store
