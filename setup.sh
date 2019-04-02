@@ -56,9 +56,9 @@ if [ ! -f ./my.properties ]
     echo -e "${LIGHT_RED}###################################################"
 fi
 
-if ! grep -q "API_KEY=" ./my.properties; then
-  echo "API_KEY=" >> my.properties
-fi
+#if ! grep -q "API_KEY=" ./my.properties; then
+#  echo "API_KEY=" >> my.properties
+#fi
 
 
 empty_props=`grep '=$' my.properties`
