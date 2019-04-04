@@ -1,7 +1,7 @@
 import os
 import random
 
-from main import db
+from app import db
 import db_utils
 
 fortune_500 = [line.replace('\n','').replace(' ','_') for line in open('data/fortune_500_list.txt', 'r').readlines()]
