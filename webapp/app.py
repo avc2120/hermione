@@ -9,8 +9,9 @@ import dash_html_components as html
 
 server = Flask(__name__)
 app = dash.Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config.suppress_callback_exceptions = True
+server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
+server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(server)
 
@@ -23,7 +24,6 @@ data_fabricator.populate_db()
 def indicator(color, text, id_value):
     return html.Div(
         [
-
             html.P(
                 text,
                 className="twelve columns indicator_text"
@@ -34,7 +34,6 @@ def indicator(color, text, id_value):
             ),
         ],
         className="four columns indicator",
-
     )
 
 @server.route('/', methods=["GET"])
