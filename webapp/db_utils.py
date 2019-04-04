@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from sqlalchemy import func
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float, Boolean
 from main import db
+import pandas as pd
 
 ###########
 # Company #
