@@ -14,6 +14,7 @@ import db_utils
 import html_utils
 from app import app
 from html_utils import indicator, df_to_table
+from chart_utils import pie_chart
 
 indicators = html.Div(
     [
@@ -22,11 +23,12 @@ indicators = html.Div(
         ),
         html.Div(
                 [
-                    html.P("Leads by source"),
+                    html.P("% Women"),
                     dcc.Graph(
-                        id="pct_women",
+                        id="pct_women_pie",
                         style={"height": "90%", "width": "98%"},
                         config=dict(displayModeBar=False),
+                        animate=True
                     ),
                 ],
                 className="four columns chart_div"
@@ -96,7 +98,7 @@ table = html.Div(
 
 layout = [
     indicators,
-    table
+    #table
 ]
 
 @app.callback(
@@ -108,11 +110,11 @@ def score_callback(company):
 
 @app.callback(
     Output("pct_women", "children"),
-    [Input("company_selector", "value")]
+    [Input("company_selector", "value"), Input("title_selector", "value")]
 )
-def pct_women_callback(company):
-    result = db_utils.get_women_pct(company)
-    return result['percentage']
+def pct_women_callback(company, title):
+    result = db_utils.get_women_pct(company, title)
+    return round(result['percentage'])
 
 @app.callback(
     Output("pct_women_leader", "children"),
@@ -120,6 +122,14 @@ def pct_women_callback(company):
 )
 def pct_women_leader_callback(company):
     return 10.00 if company == "Pinterest" else 01.00
+
+@app.callback(
+    Output("pct_women_pie", "figure"),
+    [Input("company_selector", "value"), Input("title_selector", "value")]
+)
+def pct_women_pie_callback(company, title):
+    percentage_label = "{0}%".format(round(db_utils.get_women_pct(company, title)['percentage']))
+    return pie_chart(db_utils.get_women_pct_df(company, title), percentage_label)
 
 @app.callback(
     Output("employee_table", "children"),

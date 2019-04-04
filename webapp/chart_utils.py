@@ -6,21 +6,46 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import dateutil.parser
+from plotly import graph_objs as go
 
-def pie_chart(dataframe):
-    labels = []
-    values = []
+# expects a dataframe with two columns
+def pie_chart(dataframe, label):
 
-    # compute % for each leadsource type
-    for case_type in types:
-        nb_type = df[df["LeadSource"] == case_type].shape[0]
-        values.append(nb_type / nb_leads * 100)
+    column_values = list(dataframe.columns.values)
+    labels = dataframe[column_values[0]].tolist()
+    values = dataframe[column_values[1]].tolist()
 
     trace = go.Pie(
-        labels=types,
+        labels=labels,
         values=values,
-        marker={"colors": ["#264e86", "#0074e4", "#74dbef", "#eff0f4"]},
+        hole=.5,
+        marker={"colors": ["#007c1d", "#eaeaea"]},
+        textinfo='none'
     )
 
-    layout = dict(margin=dict(l=15, r=10, t=0, b=65), legend=dict(orientation="h"))
+    layout = dict(
+        showlegend=False,
+        margin=dict(
+            l=15,
+            r=10,
+            t=0,
+            b=65
+        ),
+        grid=dict(
+            rows=1,
+            cols=1
+        ),
+        annotations= [
+            dict(
+                text=label,
+                font=dict(
+                    size=40
+                ),
+                x=0.5,
+                y=0.5,
+                showarrow=False
+            )
+        ]
+    )
+
     return dict(data=[trace], layout=layout)

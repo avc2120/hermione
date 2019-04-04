@@ -8,10 +8,10 @@ import dash_html_components as html
 
 
 server = Flask(__name__)
-app = dash.Dash(__name__, server=server, external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = dash.Dash(__name__, server=server)
 app.config.suppress_callback_exceptions = True
-server.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
 server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+server.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
 
 db = SQLAlchemy(server)
 

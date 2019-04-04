@@ -19,37 +19,85 @@ import people
 navbar = dbc.NavbarSimple(
     children=[
         dbc.NavItem(dbc.NavLink("About", href="#")),
-        dbc.NavItem(dbc.NavLink("Pricing", href="#")),
-        dcc.Dropdown(
-            id="company_selector",
-            options=[
-                {
-                    "label": "Google",
-                    "value": "Google"},
-                {
-                    "label": "Pinterest",
-                    "value": "Pinterest",
-                },
-                {
-                    "label": "All",
-                    "value": "All",
-                },
-            ],
-            value="Google",
-        ),
+        dbc.NavItem(dbc.NavLink("Pricing", href="#"))
     ],
     brand="Project Hermione",
     brand_href="#",
     sticky="top",
+    className="navbar navbar-expand-lg navbar-dark bg-primary"
+)
+
+dropdownTitles = html.Div(
+    [
+        html.Div("Company", className="two columns"),
+        html.Div("Title", className="two columns")
+    ],
+    className="row"
+)
+dropdownMenus = html.Div(
+    [
+        html.Div(
+            dcc.Dropdown(
+                id="company_selector",
+                options=[
+                    {
+                        "label": "Google",
+                        "value": "Google"},
+                    {
+                        "label": "Pinterest",
+                        "value": "Pinterest",
+                    },
+                    {
+                        "label": "All",
+                        "value": "All",
+                    },
+                ],
+                value="Google",
+                clearable=False
+
+            ),
+            className="two columns",
+
+        ),
+        html.Div(
+            dcc.Dropdown(
+                id="title_selector",
+                options=[
+                    {
+                        "label": "Software Engineer 1",
+                        "value": "Software Engineer 1"},
+                    {
+                        "label": "Software Engineer 4",
+                        "value": "Software Engineer 4",
+                    },
+                    {
+                        "label": "All",
+                        "value": "All",
+                    },
+                ],
+                value="All",
+                clearable=False
+            ),
+            className="two columns",
+
+        ),
+    ],
+    className="row",
+    style={"marginBottom": "10"}
 )
 
 body = html.Div(
     [
-        html.Div(id="people_row"),
-        html.Div(id="company_row"),
-
-    ]
+        dropdownTitles,
+        dropdownMenus,
+        html.Div(id="people_row", children=people.layout),
+        html.Div(id="company_row", children=html.Div()),
+    ],
+    style={
+        "margin": "2%"
+    }
 )
+
 
 app.layout = html.Div(
     [
@@ -63,21 +111,6 @@ app.layout = html.Div(
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet")
     ]
 )
-
-@app.callback(
-    Output("people_row", "children"),
-    [Input("company_selector", "value")]
-)
-def render_people(company):
-    return people.layout
-
-@app.callback(
-    Output("company_row", "children"),
-    [Input("company_selector", "value")]
-)
-def render_company(company):
-    return people.layout
-
 
 if __name__ == "__main__":
     app.run_server(debug=True)

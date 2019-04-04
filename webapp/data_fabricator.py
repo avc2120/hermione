@@ -9,6 +9,7 @@ studied_companies = ['Google', 'Pinterest']
 
 def populate_db():
     populate_random_company_info()
+    populate_software_1()
     populate_software_4()
 
 def populate_random_company_info():
@@ -21,6 +22,12 @@ def populate_random_company_info():
         gender_neutral_bathrooms = random.randint(0,100)
         feminine_products = random.choice([True, False])
         db_utils.add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_parking, gender_neutral_bathrooms, feminine_products)
+
+def populate_software_1():
+    populate_employee_db(100, "Software Engineer 1", 110000, 120000, 0, 2, "Male", "Google")
+    populate_employee_db(201, "Software Engineer 1", 115000, 125000, 0, 3, "Female", "Google")
+    populate_employee_db(95, "Software Engineer 1", 95000, 110000, 0, 2, "Male", "Pinterest")
+    populate_employee_db(172, "Software Engineer 1", 95000, 110000, 0, 2, "Female", "Pinterest")
 
 def populate_software_4():
     populate_employee_db(624, "Software Engineer 4", 125000, 175000, 3, 5, "Male", "Google")

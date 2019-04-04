@@ -76,25 +76,36 @@ def add_employee(title, salary, yoe, gender, company, leadership = False):
     db.session.add(employee)
     db.session.commit()
 
-def get_all_employees(company = "All"):
-    if company == "All":
-        return Employee.query.all()
-    return Employee.query.filter_by(company = company).all()
-
-def get_all_employees_df(company = "All"):
-    if company == "All":
-        return pd.read_sql_query(db.session.query(Company).statement, db.engine)
-    return pd.read_sql_query(db.session.query(Employee).filter(Employee.company == company).statement, db.engine)
-
-def get_women_pct(company):
-    result = {}
-    base_query = Employee.query
+def build_employee_query(company = "All", title = "All"):
+    query = db.session.query(Employee)
     if company != "All":
-        base_query = base_query.filter_by(company = company)
+        query = query.filter(Employee.company == company)
+    if title != "All":
+        query = query.filter(Employee.title == title)
+    return query
+
+def get_all_employees(company = "All"):
+    return build_employee_query(company = company).all()
+
+def get_all_employees_df(company = "All", title = "All"):
+    query = build_employee_query(company, title)
+    return pd.read_sql_query(query.statement, db.engine)
+
+def get_women_pct(company = "All", title = "All"):
+    result = {}
+    base_query = build_employee_query(company, title)
     result['female_count'] = base_query.filter_by(gender = "Female").count()
     result['total_count'] = base_query.count()
     result['percentage'] = result['female_count'] / result['total_count'] * 100
     return result
+
+def get_women_pct_df(company = "All", title = "All"):
+    query = db.session.query(Employee.gender, db.func.count(Employee.id).label('total'))
+    if company != "All":
+        query = query.filter(Employee.company == company)
+    if title != "All":
+        query = query.filter(Employee.title == title)
+    return pd.read_sql_query(query.group_by(Employee.gender).statement, db.engine)
 
 def create_all_tables():
     # statement here to create all the tables
