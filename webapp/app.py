@@ -20,22 +20,6 @@ import db_utils, data_fabricator
 db_utils.create_all_tables()
 data_fabricator.populate_db()
 
-#returns top indicator div
-def indicator(color, text, id_value):
-    return html.Div(
-        [
-            html.P(
-                text,
-                className="twelve columns indicator_text"
-            ),
-            html.P(
-                id = id_value,
-                className="indicator_value"
-            ),
-        ],
-        className="four columns indicator",
-    )
-
 @server.route('/', methods=["GET"])
 def home():
     return render_template('index.html')

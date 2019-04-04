@@ -57,6 +57,7 @@ class Employee(db.Model):
     yoe = Column(Integer)
     gender = Column(String(15))
     company = Column(String(50))
+    leadership = Column(Boolean, default=False)
 
     def to_dict(self):
         data = {}
@@ -70,18 +71,28 @@ class Employee(db.Model):
     def to_json(self):
         return json.dumps(self.to_dict())
 
-def add_employee(title, salary, yoe, gender, company):
-    employee = Employee(title = title, salary = salary, yoe = yoe, gender = gender, company = company)
+def add_employee(title, salary, yoe, gender, company, leadership = False):
+    employee = Employee(title = title, salary = salary, yoe = yoe, gender = gender, company = company, leadership = leadership)
     db.session.add(employee)
     db.session.commit()
 
-def get_all_employees():
-    return Employee.query.all()
+def get_all_employees(company = "All"):
+    if company == "All":
+        return Employee.query.all()
+    return Employee.query.filter_by(company = company).all()
+
+def get_all_employees_df(company = "All"):
+    if company == "All":
+        return pd.read_sql_query(db.session.query(Company).statement, db.engine)
+    return pd.read_sql_query(db.session.query(Employee).filter(Employee.company == company).statement, db.engine)
 
 def get_women_pct(company):
     result = {}
-    result['female_count'] = Employee.query.filter_by(company = company, gender = "Female").count()
-    result['total_count'] = Employee.query.count()
+    base_query = Employee.query
+    if company != "All":
+        base_query = base_query.filter_by(company = company)
+    result['female_count'] = base_query.filter_by(gender = "Female").count()
+    result['total_count'] = base_query.count()
     result['percentage'] = result['female_count'] / result['total_count'] * 100
     return result
 

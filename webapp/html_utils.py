@@ -24,3 +24,19 @@ def df_to_table(df):
             for i in range(len(df))
         ]
     )
+
+#returns top indicator div
+def indicator(color, text, id_value):
+    return html.Div(
+        [
+            html.P(
+                text,
+                className="twelve columns indicator_text"
+            ),
+            html.P(
+                id = id_value,
+                className="indicator_value"
+            ),
+        ],
+        className="four columns indicator",
+    )

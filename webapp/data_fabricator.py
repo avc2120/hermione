@@ -28,7 +28,7 @@ def populate_software_4():
     populate_employee_db(525, "Software Engineer 4", 130000, 150000, 3, 5, "Male", "Pinterest")
     populate_employee_db(475, "Software Engineer 4", 130000, 150000, 3, 5, "Female", "Pinterest")
 
-def populate_employee_db(count, title, salary_min, salary_max, yoe_min, yoe_max, gender, company):
+def populate_employee_db(count, title, salary_min, salary_max, yoe_min, yoe_max, gender, company, leadership = False):
     for i in range(count):
         salary = random.randint(salary_min, salary_max)
         yoe = random.randint(yoe_min, yoe_max)

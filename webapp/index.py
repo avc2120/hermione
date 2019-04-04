@@ -75,7 +75,7 @@ def render_people(company):
     Output("company_row", "children"),
     [Input("company_selector", "value")]
 )
-def render_people(company):
+def render_company(company):
     return people.layout
 
 
