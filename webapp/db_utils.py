@@ -40,7 +40,11 @@ def add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_
     db.session.commit()
 
 def get_all_companies():
+    print(pd.read_sql_query(db.session.query(Company).statement, db.engine))
     return Company.query.all()
+
+def get_all_companies_df():
+    return pd.read_sql_query(db.session.query(Company).statement, db.engine)
 
 ############
 # Employee #
