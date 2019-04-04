@@ -6,3 +6,4 @@ source.sh
 __pycache__
 here_test.jpg
 .DS_Store
+*.csv
