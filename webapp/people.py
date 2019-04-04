@@ -129,7 +129,8 @@ def pct_women_leader_callback(company):
 )
 def pct_women_pie_callback(company, title):
     percentage_label = "{0}%".format(round(db_utils.get_women_pct(company, title)['percentage']))
-    return pie_chart(db_utils.get_women_pct_df(company, title), "{0}% Women".format(round(db_utils.get_women_pct(company, title)['percentage'])))
+    colors = ["#007c1d", "#eaeaea"]
+    return pie_chart(db_utils.get_women_pct_df(company, title), colors, percentage_label)
 
 @app.callback(
     Output("employee_table", "children"),

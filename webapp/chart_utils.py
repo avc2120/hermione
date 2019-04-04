@@ -9,7 +9,7 @@ import dateutil.parser
 from plotly import graph_objs as go
 
 # expects a dataframe with two columns
-def pie_chart(dataframe, annotation_text):
+def pie_chart(dataframe, colors, annotation_text):
 
     column_values = list(dataframe.columns.values)
     labels = dataframe[column_values[0]].tolist()
@@ -20,7 +20,7 @@ def pie_chart(dataframe, annotation_text):
         labels=labels,
         values=values,
         hole=.5,
-        marker={"colors": ["#007c1d", "#eaeaea"]},
+        marker={"colors": colors},
         textinfo='none'
     )
 
