@@ -13,6 +13,7 @@ app.config.suppress_callback_exceptions = True
 server.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 server.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
 
+
 db = SQLAlchemy(server)
 
 import db_utils, data_fabricator
