@@ -18,14 +18,9 @@ from chart_utils import pie_chart
 
 indicators = html.Div(
     [
-        indicator(
-            "#00cc96", "Score", "score"
-        ),
+        create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
         create_chart("% Women in Leadership", "pct_women_leader_pie"),
-        indicator(
-            "#EF553B", "% Women Leaders", "pct_women_leader"
-        ),
     ],
     className="row",
 )
@@ -96,7 +91,7 @@ layout = [
     [Input("company_selector", "value")]
 )
 def score_callback(company):
-    return 50.00 if company == "Pinterest" else 45.00
+    return 95.00 if company == "Pinterest" else 52.00
 
 @app.callback(
     Output("pct_women_label", "children"),
@@ -131,10 +126,22 @@ def pct_women_leader_pie_callback(company):
     # this is hardcoded because female is always the first row
     female_count = dataframe.at[0, 'total']
     male_count = dataframe.at[1, 'total']
-    print("{0} {1} {2}".format(female_count, male_count, round(female_count/(female_count + male_count) * 100)))
     percentage_label = "{0}%".format(round(female_count/(female_count + male_count) * 100))
     colors = ["#007c1d", "#eaeaea"]
     return pie_chart(dataframe, colors, percentage_label)
+
+@app.callback(
+    Output("score_pie", "figure"),
+    [Input("company_selector", "value")]
+)
+def score_pie_callback(company):
+    score = 95 if company == "Pinterest" else 52
+    data = [["score", score], ["not_score", (100 - score)]]
+    dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
+    percentage_label = "{0}".format(score)
+    colors = ["#007c1d", "#eaeaea"]
+    return pie_chart(dataframe, colors, percentage_label)
+
 
 @app.callback(
     Output("employee_table", "children"),

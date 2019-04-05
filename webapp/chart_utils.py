@@ -26,7 +26,10 @@ def pie_chart(dataframe, colors, title):
                 "size": 50
             }
         },
-        textinfo="none"
+        textinfo="none",
+        hoverinfo="value",
+        direction="counterclockwise",
+        sort=False
     )
 
     layout = dict(

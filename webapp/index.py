@@ -53,11 +53,7 @@ dropdownMenus = html.Div(
                     {
                         "label": "Pinterest",
                         "value": "Pinterest",
-                    },
-                    {
-                        "label": "All",
-                        "value": "All",
-                    },
+                    }
                 ],
                 value="Google",
                 clearable=False
