@@ -2,21 +2,37 @@ import dash_bootstrap_components as dbc
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
+import dash_dangerously_set_inner_html
 
 from app import app
 import people
 import company
 
-navbar = dbc.NavbarSimple(
-    children=[
-        dbc.NavItem(dbc.NavLink("About", href="#")),
-        dbc.NavItem(dbc.NavLink("Pricing", href="#"))
-    ],
-    brand="Project Hermione",
-    brand_href="#",
-    sticky="top",
-    className="navbar navbar-expand-lg navbar-dark bg-primary"
-)
+navbar = html.Div([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <img class="pandemic-icon" src='hermione2.png') }}" height="38" width="34"></img>
+    <a class="navbar-brand" href="#">&nbsp;&nbsp;Project Hermione</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Features</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <a class="btn btn-secondary my-2 my-sm-0" style="display:inline-block" data-toggle="modal" data-target="#myModal">Report Disease</a>
+      </form>
+    </div>
+  </nav>''')])
 
 dropdownTitles = html.Div(
     [
@@ -97,17 +113,18 @@ body = html.Div(
 
 app.layout = html.Div(
     [
-        navbar,
-        body,
-        html.Link(href="https://use.fontawesome.com/releases/v5.2.0/css/all.css",rel="stylesheet"),
+        # html.Link(href="https://use.fontawesome.com/releases/v5.2.0/css/all.css",rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css",rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Dosis", rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Open+Sans", rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
         html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
-        html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
-        html.Link(href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css", rel="stylesheet")
+        # html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
+        html.Link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"),
+        html.Link(href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css", rel="stylesheet"),
+        navbar,
+        body
     ]
 )
 
