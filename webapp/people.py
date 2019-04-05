@@ -14,7 +14,7 @@ import db_utils
 import html_utils
 from app import app
 from html_utils import indicator, df_to_table, create_chart
-from chart_utils import pie_chart
+from chart_utils import donut_chart
 
 indicators = html.Div(
     [
@@ -115,7 +115,7 @@ def pct_women_leader_callback(company):
 def pct_women_pie_callback(company, title):
     percentage_label = "{0}%".format(round(db_utils.get_women_pct(company, title)['percentage']))
     colors = ["#007c1d", "#eaeaea"]
-    return pie_chart(db_utils.get_women_pct_df(company, title), colors, percentage_label)
+    return donut_chart(db_utils.get_women_pct_df(company, title), colors, percentage_label)
 
 @app.callback(
     Output("pct_women_leader_pie", "figure"),
@@ -128,7 +128,7 @@ def pct_women_leader_pie_callback(company):
     male_count = dataframe.at[1, 'total']
     percentage_label = "{0}%".format(round(female_count/(female_count + male_count) * 100))
     colors = ["#007c1d", "#eaeaea"]
-    return pie_chart(dataframe, colors, percentage_label)
+    return donut_chart(dataframe, colors, percentage_label)
 
 @app.callback(
     Output("score_pie", "figure"),
@@ -140,7 +140,7 @@ def score_pie_callback(company):
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)
     colors = ["#007c1d", "#eaeaea"]
-    return pie_chart(dataframe, colors, percentage_label)
+    return donut_chart(dataframe, colors, percentage_label)
 
 
 @app.callback(

@@ -12,12 +12,13 @@ import pandas as pd
 class Company(db.Model):
     __tablename__ = 'companies'
     name = Column(String(250), primary_key=True, unique=True, nullable=False)
-    maternity_weeks = Column(Integer, default=0)
-    paternity_weeks = Column(Integer, default=0)
-    lactation_rooms = Column(Integer, default=0)
-    mother_parking = Column(Integer, default=0)
-    gender_neutral_bathrooms = Column(Integer, default=0)
-    feminine_products = Column(Boolean, default=False)
+    maternity_weeks = Column(Float, default=0.00)
+    paternity_weeks = Column(Float, default=0.00)
+    lactation_rooms = Column(Float, default=0.00)
+    mother_parking = Column(Float, default=0.00)
+    gender_neutral_bathrooms = Column(Float, default=0.00)
+    feminine_products = Column(Float, default=0.00)
+    score = Column(Float, default=0.00)
 
     def to_dict(self):
         data = {}
@@ -28,14 +29,14 @@ class Company(db.Model):
         data['mother_parking'] = self.mother_parking
         data['gender_neutral_bathrooms'] = self.gender_neutral_bathrooms
         data['feminine_products'] = self.feminine_products
+        data['score'] = self.score
         return data
 
     def to_json(self):
         return json.dumps(self.to_dict())
 
-
-def add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_parking, gender_neutral_bathrooms, feminine_products):
-    company = Company(name = name, maternity_weeks = maternity_weeks, paternity_weeks = paternity_weeks, lactation_rooms = lactation_rooms, mother_parking = mother_parking, gender_neutral_bathrooms = gender_neutral_bathrooms, feminine_products = feminine_products)
+def add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_parking, gender_neutral_bathrooms, feminine_products, score):
+    company = Company(name = name, maternity_weeks = maternity_weeks, paternity_weeks = paternity_weeks, lactation_rooms = lactation_rooms, mother_parking = mother_parking, gender_neutral_bathrooms = gender_neutral_bathrooms, feminine_products = feminine_products, score = score)
     db.session.add(company)
     db.session.commit()
 
@@ -45,6 +46,14 @@ def get_all_companies():
 
 def get_all_companies_df():
     return pd.read_sql_query(db.session.query(Company).statement, db.engine)
+
+def get_company_scores(company = "All", limit = 0):
+    query = db.session.query(Company)
+    if company != "All":
+        query = query.filter(Company.name == company)
+    if limit != 0:
+        query = query.limit(limit)
+    return pd.read_sql_query(query.order_by(Company.score.desc()).statement, db.engine)
 
 ############
 # Employee #

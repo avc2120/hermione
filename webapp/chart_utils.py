@@ -9,7 +9,7 @@ import dateutil.parser
 from plotly import graph_objs as go
 
 # expects a dataframe with two columns
-def pie_chart(dataframe, colors, title):
+def donut_chart(dataframe, colors, title):
 
     column_values = list(dataframe.columns.values)
     labels = dataframe[column_values[0]].tolist()
@@ -41,6 +41,21 @@ def pie_chart(dataframe, colors, title):
             t=0,
             b=0
         ),
+    )
+
+    return dict(data=[trace], layout=layout)
+
+# expects a dataframe with only one row
+def bar_chart(dataframe, colors, title, label_overrides = []):
+    column_values = label_overrides if len(label_overrides) != 0 else list(dataframe.columns.values)
+    values = dataframe.values.tolist()[0]
+    trace = go.Bar(
+        x=column_values,
+        y=values,
+    )
+
+    layout = dict(
+        showlegend=False,
     )
 
     return dict(data=[trace], layout=layout)

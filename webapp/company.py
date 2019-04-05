@@ -6,11 +6,13 @@ from dash.dependencies import Input, Output
 from app import app
 import pandas as pd
 
+import db_utils
 from html_utils import create_chart
+from chart_utils import bar_chart
 
 layout = [ html.Div([ html.Div([
     dcc.Tabs(id="tabs", value='tab-1', children=[
-        dcc.Tab(label='My Company', value='tab-1'),
+        dcc.Tab(label='My Company', value='tab-1', id="company_name"),
         dcc.Tab(label='Leaderboard', value='tab-2'),
         dcc.Tab(label='Action Items', value='tab-3'),
     ], className="row"),
@@ -37,13 +39,15 @@ def generate_table(dataframe, max_rows=10):
     )
 
 @app.callback(Output('tabs-content', 'children'),
-              [Input('tabs', 'value')])
-def render_content(tab):
+              [Input('tabs', 'value'), Input("company_selector", "value")])
+def render_content(tab, company):
     if tab == 'tab-1':
-        return html.Div(children=[
-             html.P(["hello this is test "], id='hello', className="indicator-text"),
-             create_chart("Chalice Test", "chalice", "twelve")
-        ], className="row")
+        return html.Div(
+            [
+             create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 100)
+             ],
+             className="row"
+        )
     elif tab == 'tab-2':
         return html.Div([
             html.Div(children=[
@@ -68,10 +72,22 @@ def render_content(tab):
         ])
 
 @app.callback(
-    Output("chalice", "figure"),
-    [Input("company_selector", "value"), Input("title_selector", "value")]
+    Output("company_scores", "figure"),
+    [Input("company_selector", "value")]
 )
-def pct_women_pie_callback(company, title):
-    my_company_description = "This is the description"
+def company_scores_callback(company):
+    dataframe = db_utils.get_company_scores(company)
+    dataframe = dataframe.select_dtypes(['number'])
+    dataframe = dataframe.drop('score', axis=1)
+    my_company_description = "{0} Scores".format(company)
     colors = ["#007c1d", "#eaeaea"]
-    return pie_chart(db_utils.get_women_pct_df(company, title), colors, my_company_description)
+    label_overrides = ['Maternity Weeks Score', 'Paternity Weeks Score', 'Lactation Room Score', 'Expectant Mother Parking Spot Score', 'Gender Neutral Bathroom Score', 'Feminine Products Score']
+    print(dataframe)
+    return bar_chart(dataframe, colors, my_company_description, label_overrides)
+
+@app.callback(
+    Output("company_name", "label"),
+    [Input("company_selector", "value")]
+)
+def company_name_callback(company):
+    return company
