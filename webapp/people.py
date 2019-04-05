@@ -20,6 +20,7 @@ charts = html.Div(
     [
         create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
+        create_chart("% Average Salary", "pct_avg_salary"),
         create_chart("% Women in Leadership", "pct_women_leader_pie"),
     ],
     className="row",

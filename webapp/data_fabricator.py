@@ -24,7 +24,7 @@ def populate_random_company_info():
         feminine_products = round(random.choice([0.00, 5.00]),2)
         score = maternity_weeks + paternity_weeks + lactation_rooms + mother_parking + gender_neutral_bathrooms + feminine_products
         db_utils.add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_parking, gender_neutral_bathrooms, feminine_products, score)
-    db_utils.add_company("Pinterest", 25.00, 29.00, 8.00, 18.00, 10.00, 5.00, 95.00)
+    db_utils.add_company("Pinterest", 25.00, 28.23, 8.77, 18.32, 9.68, 5.00, 95.00)
 
 def populate_software_1():
     populate_employee_db(300, "Software Engineer 1", 110000, 120000, 0, 2, "Male", "Google")
