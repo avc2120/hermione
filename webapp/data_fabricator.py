@@ -46,4 +46,4 @@ def populate_employee_db(count, title, salary_min, salary_max, yoe_min, yoe_max,
     for i in range(count):
         salary = random.randint(salary_min, salary_max)
         yoe = random.randint(yoe_min, yoe_max)
-        db_utils.add_employee(title, salary, yoe, gender, company)
+        db_utils.add_employee(title, salary, yoe, gender, company, leadership)

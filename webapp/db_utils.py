@@ -99,12 +99,14 @@ def get_women_pct(company = "All", title = "All"):
     result['percentage'] = result['female_count'] / result['total_count'] * 100
     return result
 
-def get_women_pct_df(company = "All", title = "All"):
+def get_women_pct_df(company = "All", title = "All", leadership = False):
     query = db.session.query(Employee.gender, db.func.count(Employee.id).label('total'))
     if company != "All":
         query = query.filter(Employee.company == company)
     if title != "All":
         query = query.filter(Employee.title == title)
+    if leadership == True:
+        query = query.filter(Employee.leadership == True)
     return pd.read_sql_query(query.group_by(Employee.gender).statement, db.engine)
 
 def create_all_tables():
