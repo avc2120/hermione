@@ -16,7 +16,7 @@ from app import app
 from html_utils import indicator, df_to_table, create_chart
 from chart_utils import donut_chart
 
-indicators = html.Div(
+charts = html.Div(
     [
         create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
@@ -24,48 +24,6 @@ indicators = html.Div(
     ],
     className="row",
 )
-# charts = html.Div(
-#     [
-#         html.Div(
-#             [
-#                 html.P("Leads count per state" ),
-#                 dcc.Graph(
-#                     id="map",
-#                     style={"height": "90%", "width": "98%"},
-#                     config=dict(displayModeBar=False),
-#                 ),
-#             ],
-#             className="four columns chart_div"
-#         ),
-#
-#         html.Div(
-#             [
-#                 html.P("Leads by source"),
-#                 dcc.Graph(
-#                     id="lead_source",
-#                     style={"height": "90%", "width": "98%"},
-#                     config=dict(displayModeBar=False),
-#                 ),
-#             ],
-#             className="four columns chart_div"
-#         ),
-#
-#         html.Div(
-#             [
-#                 html.P("Converted Leads count"),
-#                 dcc.Graph(
-#                     id="converted_leads",
-#                     style={"height": "90%", "width": "98%"},
-#                     config=dict(displayModeBar=False),
-#                 ),
-#             ],
-#             className="four columns chart_div"
-#         ),
-#     ],
-#     className="row",
-#     style={"marginTop": "5"},
-# )
-#
 
 table = html.Div(
     id="employee_table",
@@ -82,8 +40,7 @@ table = html.Div(
 )
 
 layout = [
-    indicators,
-    #table
+    charts
 ]
 
 @app.callback(

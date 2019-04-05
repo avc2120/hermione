@@ -41,8 +41,8 @@ def populate_software_4():
 def populate_manager_roles():
     populate_employee_db(55, "Manager", 165000, 205000, 3, 5, "Male", "Google", True)
     populate_employee_db(12, "Manager", 155000, 200000, 4, 7, "Female", "Google", True)
-    populate_employee_db(25, "Manager", 150000, 170000, 3, 5, "Male", "Pinterest", True)
-    populate_employee_db(19, "Manager", 145000, 165000, 3, 5, "Female", "Pinterest", True)
+    populate_employee_db(19, "Manager", 150000, 170000, 3, 5, "Male", "Pinterest", True)
+    populate_employee_db(25, "Manager", 145000, 165000, 3, 5, "Female", "Pinterest", True)
 
 def populate_employee_db(count, title, salary_min, salary_max, yoe_min, yoe_max, gender, company, leadership = False):
     for i in range(count):

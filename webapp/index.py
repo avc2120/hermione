@@ -7,7 +7,9 @@ import dash_dangerously_set_inner_html
 from app import app
 import people
 import company
+import html_utils
 
+#### NOTE: THIS IS NOT IN USE JUST HERE AS REFERENCE - MODIFY DASH_NAVBAR INSTEAD ####
 navbar = html.Div([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <img src='assets/hermione2.png') }}" height="2.5%" width="2.5%"></img>
@@ -30,6 +32,50 @@ navbar = html.Div([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
       </ul>
     </div>
   </nav>''')])
+#### NOTE: THIS IS NOT IN USE JUST HERE AS REFERENCE - MODIFY DASH_NAVBAR INSTEAD ####
+
+
+# this is a copy of the above HTML
+dash_navbar = html.Div(
+    [
+        html.Nav(
+            [
+                html.Img(src="assets/hermione2.png", height="2.5%", width="2.5%"),
+                html.A("Project Hermione", href="#", className="navbar-brand", style={'padding': 10}),
+                html.Button(
+                    [
+                        html.Span(className="navbar-toggler-icon")
+                    ],
+                    className="navbar-toggler",
+                    type="button",
+                    # this is how you add the wildcard data and aria attributes
+                    **{
+                        "data-toggle" : "collapse",
+                        "data-target" : "#navbarColor01",
+                        "aria-controls" : "navbarColor01",
+                        "aria-expanded" : "false",
+                        "aria-label" : "Toggle navigation"
+                    }
+                ),
+                html.Div(
+                    [
+                        html.Ul(
+                            [
+                                html_utils.nav_list_item(html_utils.nav_link("Dashboard", "#"), active = True),
+                                html_utils.nav_list_item(html_utils.nav_link("About", "#")),
+                                html_utils.nav_list_item(html_utils.nav_link("Mission Statement", "#"))
+                            ],
+                            className="navbar-nav mr-auto"
+                        )
+                    ],
+                    className="collapse navbar-collapse",
+                    id="navbarColor01"
+                )
+            ],
+            className="navbar navbar-expand-lg navbar-dark bg-primary"
+        )
+    ]
+)
 
 dropdownTitles = html.Div(
     [
@@ -38,53 +84,11 @@ dropdownTitles = html.Div(
     ],
     className="row"
 )
+
 dropdownMenus = html.Div(
     [
-        html.Div(
-            dcc.Dropdown(
-                id="company_selector",
-                options=[
-                    {
-                        "label": "Google",
-                        "value": "Google"},
-                    {
-                        "label": "Pinterest",
-                        "value": "Pinterest",
-                    }
-                ],
-                value="Google",
-                clearable=False,
-            ),
-            className="two columns",
-
-        ),
-        html.Div(
-            dcc.Dropdown(
-                id="title_selector",
-                options=[
-                    {
-                        "label": "Software Engineer 1",
-                        "value": "Software Engineer 1"
-                    },
-                    {
-                        "label": "Software Engineer 4",
-                        "value": "Software Engineer 4",
-                    },
-                    {
-                        "label": "Leadership",
-                        "value": "Manager"
-                    },
-                    {
-                        "label": "All",
-                        "value": "All",
-                    },
-                ],
-                value="All",
-                clearable=False
-            ),
-            className="two columns",
-
-        ),
+        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest"]),
+        html_utils.dropdown_menu("title_selector", ["All", "Software Engineer 1", "Software Engineer 4", "Manager"])
     ],
     className="row",
     style={"marginBottom": "10"}
@@ -105,7 +109,7 @@ body = html.Div(
 
 app.layout = html.Div(
     [
-        navbar,
+        dash_navbar,
         body
     ]
 )

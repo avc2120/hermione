@@ -41,6 +41,29 @@ def indicator(color, text, id_value):
         className="three columns indicator",
     )
 
+def nav_link(text, url):
+    return html.A(text, href=url, className="nav-link")
+
+def nav_list_item(children, active=False):
+    return html.Li(
+        [
+            children
+        ],
+        className="nav-item {0}".format("active" if active else "")
+    )
+
+def dropdown_menu(id, items, clearable=False, className="two columns"):
+    return html.Div(
+        dcc.Dropdown(
+            id=id,
+            options=[{"label": item, "value": item} for item in items],
+            value=items[0],
+            clearable=clearable,
+        ),
+        className=className,
+
+    )
+
 def create_chart(title, id, size = "three", height = 80, default_figure = { 'data': [], 'layout': []}):
     return html.Div(
             [
