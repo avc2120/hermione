@@ -31,27 +31,28 @@ def generate_table(dataframe, max_rows=10):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
-@app.callback([Output('tabs-content', 'children'), Output("tabs-content", "company")],
+@app.callback([Output('tabs-content', 'children'), Output("company_scores", "company"), Output("leaderboard", "company")],
               [Input('tabs', 'value'), Input("company_selector", "value")])
 def render_content(tab, company):
+    content = []
     if tab == 'tab-1':
-        return [
+        content = [
             html.Div(
                 [
-                 create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 100)
+                 create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 80)
                  ],
                  className="row"
             )
-        ], company
+        ]
     elif tab == 'tab-2':
-        return html.Div(
+        content = html.Div(
             [
              create_chart("Leaderboard", "leaderboard", size = "twelve", height = 80)
              ],
              className="row"
-        ), company
+        )
     elif tab == 'tab-3':
-        return html.Div([
+        content = [html.Div([
              dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
         <h2>Example body text</h2>
 <p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
@@ -64,12 +65,8 @@ def render_content(tab, company):
 </div>
     ''')
         ],
-        className="row"), company
-
-@app.callback([Output("company_scores", "company"), Output("leaderboard", "company")],
-              [Input("tabs-content", "company")])
-def chart_refresher_callback(company):
-    return company, company
+        className="row")]
+    return content, company, company
 
 @app.callback(
     Output("company_scores", "figure"),

@@ -63,15 +63,17 @@ def bar_chart(dataframe, colors, title, label_overrides = []):
             l=25,
             r=5,
             t=5,
-            b=65
+            b=35
         ),
+        animate=True
     )
 
     return dict(data=[trace], layout=layout)
 
 # expects x dimension as first column
 def stacked_bar_chart(dataframe, colors, title, label_overrides = []):
-
+    if len(dataframe.values) == 0:
+        return {"data": [], "layout": []}
     labels = label_overrides if len(label_overrides) != 0 else dataframe[dataframe.columns[0]].tolist()
     dataframe.drop(dataframe.columns[0], axis=1, inplace=True)
     traces = [
