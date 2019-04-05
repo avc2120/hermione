@@ -65,10 +65,15 @@ dropdownMenus = html.Div(
                 options=[
                     {
                         "label": "Software Engineer 1",
-                        "value": "Software Engineer 1"},
+                        "value": "Software Engineer 1"
+                    },
                     {
                         "label": "Software Engineer 4",
                         "value": "Software Engineer 4",
+                    },
+                    {
+                        "label": "Leadership",
+                        "value": "Manager"
                     },
                     {
                         "label": "All",

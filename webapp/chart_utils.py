@@ -11,9 +11,12 @@ from plotly import graph_objs as go
 # expects a dataframe with two columns
 def pie_chart(dataframe, colors, annotation_text):
 
+    print(dataframe)
     column_values = list(dataframe.columns.values)
     labels = dataframe[column_values[0]].tolist()
     values = dataframe[column_values[1]].tolist()
+    print(labels)
+    print(values)
     print("label: " + annotation_text)
 
     trace = go.Pie(
@@ -25,6 +28,7 @@ def pie_chart(dataframe, colors, annotation_text):
     )
 
     layout = dict(
+        sort=True,
         showlegend=False,
         margin=dict(
             l=10,
