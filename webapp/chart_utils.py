@@ -47,6 +47,8 @@ def donut_chart(dataframe, colors, title):
 
 # expects a dataframe with only one row
 def bar_chart(dataframe, colors, title, label_overrides = []):
+    if len(dataframe.values) == 0:
+        return {"data": [], "layout": []}
     column_values = label_overrides if len(label_overrides) != 0 else list(dataframe.columns.values)
     values = dataframe.values.tolist()[0]
     trace = go.Bar(
@@ -57,6 +59,12 @@ def bar_chart(dataframe, colors, title, label_overrides = []):
 
     layout = dict(
         showlegend=False,
+        margin=dict(
+            l=25,
+            r=5,
+            t=5,
+            b=65
+        ),
     )
 
     return dict(data=[trace], layout=layout)
@@ -66,7 +74,6 @@ def stacked_bar_chart(dataframe, colors, title, label_overrides = []):
 
     labels = label_overrides if len(label_overrides) != 0 else dataframe[dataframe.columns[0]].tolist()
     dataframe.drop(dataframe.columns[0], axis=1, inplace=True)
-    print(colors)
     traces = [
         go.Bar(
             x=labels,

@@ -31,7 +31,7 @@ def generate_table(dataframe, max_rows=10):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
-@app.callback(Output('tabs-content', 'children'),
+@app.callback([Output('tabs-content', 'children'), Output("tabs-content", "company")],
               [Input('tabs', 'value'), Input("company_selector", "value")])
 def render_content(tab, company):
     if tab == 'tab-1':
@@ -42,14 +42,14 @@ def render_content(tab, company):
                  ],
                  className="row"
             )
-        ]
+        ], company
     elif tab == 'tab-2':
         return html.Div(
             [
              create_chart("Leaderboard", "leaderboard", size = "twelve", height = 80)
              ],
              className="row"
-        )
+        ), company
     elif tab == 'tab-3':
         return html.Div([
              dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
@@ -63,17 +63,21 @@ def render_content(tab, company):
   <div class="progress-bar" style="width: 60%;"></div>
 </div>
     ''')
-        ])
+        ],
+        className="row"), company
+
+@app.callback([Output("company_scores", "company"), Output("leaderboard", "company")],
+              [Input("tabs-content", "company")])
+def chart_refresher_callback(company):
+    return company, company
 
 @app.callback(
     Output("company_scores", "figure"),
-    [Input("company_selector", "value")]
+    [Input("company_scores", "company")]
 )
 def company_scores_callback(company):
     dataframe = db_utils.get_company_scores(company)
     dataframe = dataframe.select_dtypes(['number'])
-    dataframe = dataframe.drop('score', axis=1)
-    print(dataframe)
     my_company_description = "{0} Scores".format(company)
     colors = ["#593196"]
     label_overrides = ['Maternity Weeks Score', 'Paternity Weeks Score', 'Lactation Room Score', 'Expectant Mother Parking Spot Score', 'Gender Neutral Bathroom Score', 'Feminine Products Score']
@@ -81,14 +85,13 @@ def company_scores_callback(company):
 
 @app.callback(
     Output("leaderboard", "figure"),
-    [Input("company_selector", "value")]
+    [Input("leaderboard", "company")]
 )
 def leaderboard_callback(company):
     dataframe = db_utils.get_company_scores(limit = 20)
     dataframe.drop('score', axis=1, inplace=True)
     # only works because first column is company name
     label_overrides = [company.replace("_"," ") for company in dataframe[dataframe.columns[0]].tolist()]
-    print(dataframe)
     # https://pinetools.com/gradient-generator
     colors = ["#593196", "#724cab", "#8b68c0", "#a483d5", "#bd9fea", "#d6bbff"]
     my_company_description = "Hermione Score Leaderboard"
