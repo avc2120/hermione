@@ -6,12 +6,14 @@ from dash.dependencies import Input, Output
 from app import app
 import pandas as pd
 
+from html_utils import create_chart
+
 layout = [ html.Div([ html.Div([
     dcc.Tabs(id="tabs", value='tab-1', children=[
         dcc.Tab(label='My Company', value='tab-1'),
         dcc.Tab(label='Leaderboard', value='tab-2'),
         dcc.Tab(label='Action Items', value='tab-3'),
-    ]),
+    ], className="row"),
     html.Div(id='tabs-content')
     ])
 ])]
@@ -39,21 +41,9 @@ def generate_table(dataframe, max_rows=10):
 def render_content(tab):
     if tab == 'tab-1':
         return html.Div(children=[
-             html.P(["hello this is test "], id='hello', style={'background-color': 'white'}),
-             html.Div(
-                [
-                    dcc.Graph(
-                        id="chalice",
-                        style={"height": "100%", "width": "480%"},
-                        config=dict(displayModeBar=False),
-                        animate=True
-                    ),
-                    html.P(id="my_company_description", style={"fontSize": 40})
-                ],
-                className="three columns chart_div",
-                id="my_company_graph"
-            )
-        ])
+             html.P(["hello this is test "], id='hello', className="indicator-text"),
+             create_chart("Chalice Test", "chalice", "twelve")
+        ], className="row")
     elif tab == 'tab-2':
         return html.Div([
             html.Div(children=[

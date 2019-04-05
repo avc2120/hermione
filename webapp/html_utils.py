@@ -41,16 +41,16 @@ def indicator(color, text, id_value):
         className="three columns indicator",
     )
 
-def create_chart(title, id):
+def create_chart(title, id, size = "three"):
     return html.Div(
             [
-                html.P(title),
+                html.H4(title, className="chart-title",style={"height": "10%", "width": "98%"}),
                 dcc.Graph(
                     id=id,
-                    style={"height": "90%", "width": "98%"},
+                    style={"height": "80%", "width": "98%"},
                     config=dict(displayModeBar=False),
                     animate=True
                 )
             ],
-            className="three columns chart_div"
+            className="{0} columns chart_div".format(size)
         )

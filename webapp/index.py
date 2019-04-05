@@ -10,7 +10,7 @@ import company
 
 navbar = html.Div([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <img src='hermione2.png') }}" height="38" width="34"></img>
+    <img src='assets/hermione2.png') }}" height="2.5%" width="2.5%"></img>
     <a class="navbar-brand" href="#">&nbsp;&nbsp;Project Hermione</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -53,8 +53,7 @@ dropdownMenus = html.Div(
                     }
                 ],
                 value="Google",
-                clearable=False
-
+                clearable=False,
             ),
             className="two columns",
 
@@ -106,16 +105,6 @@ body = html.Div(
 
 app.layout = html.Div(
     [
-        # html.Link(href="https://use.fontawesome.com/releases/v5.2.0/css/all.css",rel="stylesheet"),
-        # this is the charting css one from the dash example
-        html.Link(href="https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52759b2aef506/stylesheet-oil-and-gas.css",rel="stylesheet"),
-        html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
-        # html.Link(href="https://fonts.googleapis.com/css?family=Dosis", rel="stylesheet"),
-        # html.Link(href="https://fonts.googleapis.com/css?family=Open+Sans", rel="stylesheet"),
-        # html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
-        # html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
-        html.Link(href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"),
-        html.Link(href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css", rel="stylesheet"),
         navbar,
         body
     ]
