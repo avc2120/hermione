@@ -38,5 +38,19 @@ def indicator(color, text, id_value):
                 className="indicator_value"
             ),
         ],
-        className="four columns indicator",
+        className="three columns indicator",
     )
+
+def create_chart(title, id):
+    return html.Div(
+            [
+                html.P(title),
+                dcc.Graph(
+                    id=id,
+                    style={"height": "90%", "width": "98%"},
+                    config=dict(displayModeBar=False),
+                    animate=True
+                )
+            ],
+            className="three columns chart_div"
+        )

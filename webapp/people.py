@@ -13,7 +13,7 @@ from plotly import graph_objs as go
 import db_utils
 import html_utils
 from app import app
-from html_utils import indicator, df_to_table
+from html_utils import indicator, df_to_table, create_chart
 from chart_utils import pie_chart
 
 indicators = html.Div(
@@ -21,18 +21,8 @@ indicators = html.Div(
         indicator(
             "#00cc96", "Score", "score"
         ),
-        html.Div(
-                [
-                    dcc.Graph(
-                        id="pct_women_pie",
-                        style={"height": "80%", "width": "98%"},
-                        config=dict(displayModeBar=False),
-                        animate=True
-                    ),
-                    html.P(id="pct_women_label", style={"fontSize": 40})
-                ],
-                className="three columns chart_div"
-            ),
+        create_chart("% Women", "pct_women_pie"),
+        create_chart("% Women in Leadership", "pct_women_leader_pie"),
         indicator(
             "#EF553B", "% Women Leaders", "pct_women_leader"
         ),
@@ -131,6 +121,20 @@ def pct_women_pie_callback(company, title):
     percentage_label = "{0}%".format(round(db_utils.get_women_pct(company, title)['percentage']))
     colors = ["#007c1d", "#eaeaea"]
     return pie_chart(db_utils.get_women_pct_df(company, title), colors, percentage_label)
+
+@app.callback(
+    Output("pct_women_leader_pie", "figure"),
+    [Input("company_selector", "value")]
+)
+def pct_women_leader_pie_callback(company):
+    dataframe = db_utils.get_women_pct_df(company, leadership = True)
+    # this is hardcoded because female is always the first row
+    female_count = dataframe.at[0, 'total']
+    male_count = dataframe.at[1, 'total']
+    print("{0} {1} {2}".format(female_count, male_count, round(female_count/(female_count + male_count) * 100)))
+    percentage_label = "{0}%".format(round(female_count/(female_count + male_count) * 100))
+    colors = ["#007c1d", "#eaeaea"]
+    return pie_chart(dataframe, colors, percentage_label)
 
 @app.callback(
     Output("employee_table", "children"),
