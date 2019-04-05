@@ -105,16 +105,11 @@ app.layout = html.Div(
         html.Link(href="https://fonts.googleapis.com/css?family=Open+Sans", rel="stylesheet"),
         html.Link(href="https://fonts.googleapis.com/css?family=Ubuntu", rel="stylesheet"),
         html.Link(href="https://cdn.rawgit.com/amadoukane96/8a8cfdac5d2cecad866952c52a70a50e/raw/cd5a9bf0b30856f4fc7e3812162c74bfc0ebe011/dash_crm.css", rel="stylesheet"),
-        html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet")
+        html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
+        html.Link(href="https://codepen.io/chriddyp/pen/bWLwgP.css", rel="stylesheet"),
+        html.Link(href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css", rel="stylesheet")
     ]
 )
-
-@app.callback(
-    Output("people_row", "children"),
-    [Input("company_selector", "value")]
-)
-def render_people(a):
-    return people.layout
 
 @app.callback(
     Output("company_row", "children"),
