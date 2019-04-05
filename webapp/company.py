@@ -75,7 +75,7 @@ def company_scores_callback(company):
     dataframe = dataframe.drop('score', axis=1)
     print(dataframe)
     my_company_description = "{0} Scores".format(company)
-    colors = ["#007c1d", "#eaeaea"]
+    colors = ["#593196"]
     label_overrides = ['Maternity Weeks Score', 'Paternity Weeks Score', 'Lactation Room Score', 'Expectant Mother Parking Spot Score', 'Gender Neutral Bathroom Score', 'Feminine Products Score']
     return bar_chart(dataframe, colors, my_company_description, label_overrides)
 
@@ -84,14 +84,14 @@ def company_scores_callback(company):
     [Input("company_selector", "value")]
 )
 def leaderboard_callback(company):
-    print("well hello")
     dataframe = db_utils.get_company_scores(limit = 20)
     dataframe.drop('score', axis=1, inplace=True)
     # only works because first column is company name
     label_overrides = [company.replace("_"," ") for company in dataframe[dataframe.columns[0]].tolist()]
     print(dataframe)
+    # https://pinetools.com/gradient-generator
+    colors = ["#593196", "#724cab", "#8b68c0", "#a483d5", "#bd9fea", "#d6bbff"]
     my_company_description = "Hermione Score Leaderboard"
-    colors = ["#007c1d", "#eaeaea"]
     return stacked_bar_chart(dataframe, colors, my_company_description, label_overrides = label_overrides)
 
 @app.callback(

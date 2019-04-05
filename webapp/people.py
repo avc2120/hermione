@@ -114,7 +114,7 @@ def pct_women_leader_callback(company):
 )
 def pct_women_pie_callback(company, title):
     percentage_label = "{0}%".format(round(db_utils.get_women_pct(company, title)['percentage']))
-    colors = ["#007c1d", "#eaeaea"]
+    colors = ["#593196", "#eaeaea"]
     return donut_chart(db_utils.get_women_pct_df(company, title), colors, percentage_label)
 
 @app.callback(
@@ -127,7 +127,7 @@ def pct_women_leader_pie_callback(company):
     female_count = dataframe.at[0, 'total']
     male_count = dataframe.at[1, 'total']
     percentage_label = "{0}%".format(round(female_count/(female_count + male_count) * 100))
-    colors = ["#007c1d", "#eaeaea"]
+    colors = ["#593196", "#eaeaea"]
     return donut_chart(dataframe, colors, percentage_label)
 
 @app.callback(
@@ -139,7 +139,7 @@ def score_pie_callback(company):
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)
-    colors = ["#007c1d", "#eaeaea"]
+    colors = ["#593196", "#eaeaea"]
     return donut_chart(dataframe, colors, percentage_label)
 
 
