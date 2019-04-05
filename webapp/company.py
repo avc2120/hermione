@@ -8,7 +8,7 @@ import pandas as pd
 
 import db_utils
 from html_utils import create_chart
-from chart_utils import bar_chart
+from chart_utils import bar_chart, stacked_bar_chart
 
 layout = [ html.Div([ html.Div([
     dcc.Tabs(id="tabs", value='tab-1', children=[
@@ -19,13 +19,6 @@ layout = [ html.Div([ html.Div([
     html.Div(id='tabs-content')
     ])
 ])]
-
-df = pd.read_csv(
-    'https://gist.githubusercontent.com/chriddyp/'
-    'c78bf172206ce24f77d6363a2d754b59/raw/'
-    'c353e8ef842413cae56ae3920b8fd78468aa4cb2/'
-    'usa-agricultural-exports-2011.csv')
-
 
 def generate_table(dataframe, max_rows=10):
     return html.Table(
@@ -49,13 +42,12 @@ def render_content(tab, company):
              className="row"
         )
     elif tab == 'tab-2':
-        return html.Div([
-            html.Div(children=[
-            html.H4(children='US Agriculture Exports (2011)'),
-            generate_table(df)
-        ])
-
-        ])
+        return html.Div(
+            [
+             create_chart("Leaderboard", "leaderboard", size = "twelve", height = 100)
+             ],
+             className="row"
+        )
     elif tab == 'tab-3':
         return html.Div([
              dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
@@ -73,17 +65,29 @@ def render_content(tab, company):
 
 @app.callback(
     Output("company_scores", "figure"),
-    [Input("company_selector", "value")]
+    [Input("company_selector", "value"), Input('tabs-content', 'children')]
 )
-def company_scores_callback(company):
+def company_scores_callback(company, tab):
     dataframe = db_utils.get_company_scores(company)
     dataframe = dataframe.select_dtypes(['number'])
     dataframe = dataframe.drop('score', axis=1)
+    print(dataframe)
     my_company_description = "{0} Scores".format(company)
     colors = ["#007c1d", "#eaeaea"]
     label_overrides = ['Maternity Weeks Score', 'Paternity Weeks Score', 'Lactation Room Score', 'Expectant Mother Parking Spot Score', 'Gender Neutral Bathroom Score', 'Feminine Products Score']
-    print(dataframe)
     return bar_chart(dataframe, colors, my_company_description, label_overrides)
+
+@app.callback(
+    Output("leaderboard", "figure"),
+    [Input("company_selector", "value")]
+)
+def leaderboard_callback(company):
+    print("well hello")
+    dataframe = db_utils.get_company_scores()
+    print(dataframe)
+    my_company_description = "Hermione Score Leaderboard"
+    colors = ["#007c1d", "#eaeaea"]
+    return stacked_bar_chart(dataframe, colors, my_company_description)
 
 @app.callback(
     Output("company_name", "label"),
