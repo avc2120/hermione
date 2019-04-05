@@ -48,12 +48,12 @@ def get_all_companies_df():
     return pd.read_sql_query(db.session.query(Company).statement, db.engine)
 
 def get_company_scores(company = "All", limit = 0):
-    query = db.session.query(Company)
+    query = db.session.query(Company).order_by(Company.score.desc())
     if company != "All":
         query = query.filter(Company.name == company)
     if limit != 0:
         query = query.limit(limit)
-    return pd.read_sql_query(query.order_by(Company.score.desc()).statement, db.engine)
+    return pd.read_sql_query(query.statement, db.engine)
 
 ############
 # Employee #

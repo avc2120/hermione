@@ -41,7 +41,7 @@ def indicator(color, text, id_value):
         className="three columns indicator",
     )
 
-def create_chart(title, id, size = "three", height = 80):
+def create_chart(title, id, size = "three", height = 80, default_figure = { 'data': [], 'layout': []}):
     return html.Div(
             [
                 html.H4(title, className="chart-title",style={"height": "10%", "width": "98%"}),
@@ -49,7 +49,8 @@ def create_chart(title, id, size = "three", height = 80):
                     id=id,
                     style={"height": "{0}%".format(height), "width": "98%"},
                     config=dict(displayModeBar=False),
-                    animate=True
+                    animate=True,
+                    figure=default_figure
                 )
             ],
             className="{0} columns chart_div".format(size)

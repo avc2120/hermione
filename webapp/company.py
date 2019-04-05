@@ -35,16 +35,18 @@ def generate_table(dataframe, max_rows=10):
               [Input('tabs', 'value'), Input("company_selector", "value")])
 def render_content(tab, company):
     if tab == 'tab-1':
-        return html.Div(
-            [
-             create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 100)
-             ],
-             className="row"
-        )
+        return [
+            html.Div(
+                [
+                 create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 100)
+                 ],
+                 className="row"
+            )
+        ]
     elif tab == 'tab-2':
         return html.Div(
             [
-             create_chart("Leaderboard", "leaderboard", size = "twelve", height = 100)
+             create_chart("Leaderboard", "leaderboard", size = "twelve", height = 80)
              ],
              className="row"
         )
@@ -65,9 +67,9 @@ def render_content(tab, company):
 
 @app.callback(
     Output("company_scores", "figure"),
-    [Input("company_selector", "value"), Input('tabs-content', 'children')]
+    [Input("company_selector", "value")]
 )
-def company_scores_callback(company, tab):
+def company_scores_callback(company):
     dataframe = db_utils.get_company_scores(company)
     dataframe = dataframe.select_dtypes(['number'])
     dataframe = dataframe.drop('score', axis=1)
@@ -83,11 +85,14 @@ def company_scores_callback(company, tab):
 )
 def leaderboard_callback(company):
     print("well hello")
-    dataframe = db_utils.get_company_scores()
+    dataframe = db_utils.get_company_scores(limit = 20)
+    dataframe.drop('score', axis=1, inplace=True)
+    # only works because first column is company name
+    label_overrides = [company.replace("_"," ") for company in dataframe[dataframe.columns[0]].tolist()]
     print(dataframe)
     my_company_description = "Hermione Score Leaderboard"
     colors = ["#007c1d", "#eaeaea"]
-    return stacked_bar_chart(dataframe, colors, my_company_description)
+    return stacked_bar_chart(dataframe, colors, my_company_description, label_overrides = label_overrides)
 
 @app.callback(
     Output("company_name", "label"),
