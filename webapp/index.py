@@ -11,34 +11,6 @@ import html_utils
 
 # app.css.config.serve_locally = True
 # app.scripts.config.serve_locally = False
-
-
-#### NOTE: THIS IS NOT IN USE JUST HERE AS REFERENCE - MODIFY DASH_NAVBAR INSTEAD ####
-navbar = html.Div([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <img src='assets/hermione2.png') }}" height="2.5%" width="2.5%"></img>
-    <a class="navbar-brand" href="#">&nbsp;&nbsp;Project Hermione</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarColor01">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About</a>
-        </li>
-      </ul>
-    </div>
-  </nav>''')])
-#### NOTE: THIS IS NOT IN USE JUST HERE AS REFERENCE - MODIFY DASH_NAVBAR INSTEAD ####
-
-
 # this is a copy of the above HTML
 dash_navbar = html.Div(
     [
@@ -76,7 +48,7 @@ dash_navbar = html.Div(
                     id="navbarColor01"
                 )
             ],
-            className="navbar navbar-expand-lg navbar-light bg-light"
+            className="navbar navbar-expand-lg navbar-dark bg-primary"
         )
     ]
 )
