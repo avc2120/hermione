@@ -103,17 +103,12 @@ def add_position(n_clicks, children):
     [Input("company_selector", "value")]
 )
 def score_callback(company):
-    result = {'Google': 95.00, 'Pinterest': 52.00}
-    if company in result:
-        return result[company]
-    else:
-        return random.randint(0,100)
+    return db_utils.get_score_for_company(company)
 
 @app.callback(
     Output("company_selector", "options"),
     [Input('save-data', 'n_clicks')])
 def get_companies(options):
-    print('in here alice')
     return [{'label': i, 'value': i} for i in db_utils.get_companies()]
 
 @app.callback(
@@ -158,11 +153,7 @@ def pct_women_leader_pie_callback(company):
     [Input("company_selector", "value")]
 )
 def score_pie_callback(company):
-    scores = {"Pinterest": 95, "Google": 52}
-    if company in scores:
-        score = scores.get(company)
-    else:
-        score = random.randint(0,100)
+    score = db_utils.get_score_for_company(company)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)

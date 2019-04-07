@@ -73,6 +73,13 @@ def company_scores_callback(company):
 def leaderboard_callback(company):
     dataframe = db_utils.get_company_scores(limit = 20)
     dataframe.drop('score', axis=1, inplace=True)
+    #score = maternity_weeks * .25 + paternity_weeks * .30 + lactation_rooms * .10 + mother_parking * .20 + gender_neutral_bathrooms * .10 + feminine_products * .05
+    dataframe.loc[:, "maternity_weeks"] *= .25
+    dataframe.loc[:, "paternity_weeks"] *= .30
+    dataframe.loc[:, "lactation_rooms"] *= .10
+    dataframe.loc[:, "mother_parking"] *= .20
+    dataframe.loc[:, "gender_neutral_bathrooms"] *= .10
+    dataframe.loc[:, "feminine_products"] *= .05
     # only works because first column is company name
     label_overrides = [company.replace("_"," ") for company in dataframe[dataframe.columns[0]].tolist()]
     # https://pinetools.com/gradient-generator

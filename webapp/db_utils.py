@@ -56,6 +56,11 @@ def get_company_scores(company = "All", limit = 0):
         query = query.limit(limit)
     return pd.read_sql_query(query.statement, db.engine)
 
+def get_score_for_company(company):
+    query = db.session.query(Company.score).filter(Company.name == company)
+    dataframe = pd.read_sql_query(query.statement, db.engine)
+    return int(round(dataframe.iloc[0]['score']))
+
 ############
 # Employee #
 ############
@@ -116,7 +121,6 @@ def get_women_pct(company = "All", title = "All"):
     return result
 
 def get_companies():
-    time.sleep(0.5)
     base_query = build_employee_query().with_entities(Employee.company).distinct().all()
     return [i[0] for i in base_query]
 
