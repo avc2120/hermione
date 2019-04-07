@@ -21,7 +21,7 @@ charts = html.Div(
     [
         html.Div([
             html.Img(src='assets/gold-certified.png', style={"width": "265px", "margin-top": "20px"}),
-            html.H3("Gold Certified", style={"color":"white", "margin-left":"55px"})],
+            html.H3("Gold Certified", style={"color":"white", "text-align":"center"})],
             className="certification",
             style={"backgroundColor": "#593196", "width": "268px", "border-radius":"3px"}),
         create_chart("Overall Score", "score_pie"),
