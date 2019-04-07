@@ -107,6 +107,19 @@ def score_callback(company):
         "display": "block" if active else "none"
     }
 
+@app.callback(Output("positions-list", "children"),
+    [Input("add-position-salary","n_clicks")],
+    [State("positions-list", "children")]
+    )
+def add_position(n_clicks, children):
+    if n_clicks != None and n_clicks > 0:
+        if not children:
+            return html_utils.salary("Software Engineer")
+        else:
+            return html.Div([
+                children,
+                html_utils.salary("Software Engineer")])
+
 @app.callback(
     Output("company_selector", "options"),
     [Input('save-data', 'n_clicks')])
