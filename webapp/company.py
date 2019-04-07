@@ -54,14 +54,14 @@ def render_content(tab, company):
     elif tab == 'tab-3':
         content = [html.Div([
              dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''
-        <h2>Example body text</h2>
-<p>Nullam quis risus eget <a href="#">urna mollis ornare</a> vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-<p><small>This line of text is meant to be treated as fine print.</small></p>
-<p>The following snippet of text is <strong>rendered as bold text</strong>.</p>
-<p>The following snippet of text is <em>rendered as italicized text</em>.</p>
-<p>An abbreviation of the word attribute is <abbr title="attribute">attr</abbr>.</p>
-<div class="progress">
-  <div class="progress-bar" style="width: 60%;"></div>
+       <div class="card">
+  <div class="card-body">
+    <h4 class="card-title">Card title</h4>
+    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
 </div>
     ''')
         ],
