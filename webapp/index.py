@@ -9,6 +9,7 @@ import people
 import company
 import html_utils
 from html_utils import salary
+import db_utils
 
 # app.css.config.serve_locally = True
 # app.scripts.config.serve_locally = False
@@ -62,9 +63,14 @@ dropdownTitles = html.Div(
     className="row"
 )
 
-dropdownMenus = html.Div(
-    [
-        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest"]),
+dropdownMenus = html.Div([
+    html.Div(
+        dcc.Dropdown(
+            id="company_selector",
+             options=[{'label': i, 'value': i} for i in db_utils.get_companies()],
+            value=db_utils.get_companies()[0],
+            clearable=False,
+        ), className="two columns"),
         html_utils.dropdown_menu("title_selector", ["All", "Software Engineer 1", "Software Engineer 4", "Manager"])
     ],
     className="row",
@@ -81,10 +87,11 @@ modal = html.Div([
       html.Div([
         html.Form([
           html.Fieldset([
-            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
-            html_utils.form_group("Number of Men in Tech", "Enter Number of Men in Tech"),
-            html_utils.form_group("Number of Women in Tech Leadership", "Enter Number of Women in Tech Leadership"),
-            html_utils.form_group("Number of Men in Tech Leadership", "Enter Number of Men in Tech Leadership"),
+            html_utils.form_group("Company Name", "Enter Company Name", "wit_company"),
+            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech", "wit"),
+            html_utils.form_group("Number of Men in Tech", "Enter Number of Men in Tech", "mit"),
+            html_utils.form_group("Number of Women in Tech Leadership", "Enter Number of Women in Tech Leadership", "wit_lead"),
+            html_utils.form_group("Number of Men in Tech Leadership", "Enter Number of Men in Tech Leadership", "mit_lead"),
             html_utils.upload(),
             html.Div([], id="positions-list"),
             # html.Button("Add Position Salary", className="btn btn-outline-primary", id="add-position")
@@ -108,60 +115,6 @@ body = html.Div(
         html.Span([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<form class="form-inline my-2 my-lg-0 report-statistics">
         <a class="btn btn-secondary my-2 my-sm-0" style="display:inline-block" data-toggle="modal" data-target="#myModal">Report Statistics</a>
       </form>''')]),
-  #   <div class="modal" id="myModal">
-  #   <div class="modal-dialog" style="width:1250px;">
-  #     <div class="modal-content">
-
-  #       <!-- Modal Header -->
-  #       <div class="modal-header">
-  #         <h4 class="modal-title">Report</h4>
-  #         <button type="button" class="close" data-dismiss="modal">&times;</button>
-  #       </div>
-
-  #       <!-- Modal body -->
-  #       <div class="modal-body modal-body-1">
-  #         <form>
-  #           <fieldset>
-  #             <div class="form-group">
-  #               <label>Company Name</label>
-  #               <input type="text" class="form-control" id="modal_company_name" placeholder="Enter the company name" required>
-  #             </div>
-  #             <div class="form-group">
-  #               <label>Number of Women in Tech</label>
-  #                <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
-  #             </div>
-  #             <div class="form-group">
-  #               <label>Number of Men in Tech</label>
-  #                <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
-  #             </div>
-  #            <div class="form-group">
-  #               <label>Number of Women in Tech in Leadership</label>
-  #                <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
-  #             </div>
-  #           <div class="form-group">
-  #               <label>Number of Men in Tech in Leadership</label>
-  #                <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
-  #             </div>
-  #             <div class="positions-list">
-
-  #             </div>
-  #            <button type="button" class="btn btn-outline-primary add-position">Add Diversity Program</button>
-  #            <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileToLoad">
-
-  #             <div class="form-group">
-  #             </div>
-  #           </fieldset>
-  #         </form>
-  #       </div>
-  #        <!-- Modal footer -->
-  #       <div class="modal-footer">
-  #         <button type="button" class="btn btn-primary" id="hack-next">Next</button>
-  #         <button type="button" class="btn btn-primary collapse" id="modal-close-button" data-dismiss="modal">Close</button>
-  #       </div>
-
-  #     </div>
-  #   </div>
-  # </div>''')]),
         modal,
         html.Div(id="people_row", children=people.layout, style={"marginBottom": "10"}),
         html.Div(id="company_row", children=company.layout)

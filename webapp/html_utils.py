@@ -52,10 +52,10 @@ def nav_list_item(children, active=False):
         className="nav-item {0}".format("active" if active else "")
     )
 
-def form_group(fieldName, placeholder):
+def form_group(fieldName, placeholder, id):
     return html.Div([
         html.Label(fieldName),
-        dcc.Input(type="text", placeholder=placeholder, className="form-control")
+        dcc.Input(type="text", placeholder=placeholder, id=id,className="form-control")
         ], className="form-group")
 
 def upload():

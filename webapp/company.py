@@ -30,8 +30,10 @@ def generate_table(dataframe, max_rows=10):
         ]) for i in range(min(len(dataframe), max_rows))]
     )
 
-@app.callback([Output('tabs-content', 'children'), Output("company_scores", "company"), Output("leaderboard", "company")],
-              [Input('tabs', 'value'), Input("company_selector", "value")])
+@app.callback([Output('tabs-content', 'children'),
+    Output("company_scores", "company"),
+    Output("leaderboard", "company")],
+    [Input('tabs', 'value'), Input("company_selector", "value")])
 def render_content(tab, company):
     content = []
     if tab == 'tab-1':

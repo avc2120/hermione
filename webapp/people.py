@@ -1,5 +1,5 @@
 import json
-import math
+import math as Math
 
 import pandas as pd
 import flask
@@ -12,6 +12,7 @@ import plotly.plotly as py
 from plotly import graph_objs as go
 import db_utils
 import html_utils
+import data_fabricator
 import base64
 from app import app
 from html_utils import indicator, df_to_table, create_chart
@@ -58,18 +59,22 @@ layout = [
     charts
 ]
 
-# @app.callback(
-#     Output("position-salaries", "children"),
-#     [Input("add-position", "n_clicks")])
-# def add_position(n_clicks, existing_fields):
-#     if n_clicks == 1:
-#         return html_utils.salary("Software Engineer")
-
 @app.callback(Output("placeholder-list","children"),
-    [Input("save-data","n_clicks")]
+    [Input("save-data","n_clicks")],
+    [State("wit_company", "value"),
+    State("wit", "value"),
+    State("mit", "value"),
+    State("wit_lead", "value"),
+    State("mit_lead", "value")]
     )
-def save_data(n_clicks):
-    print(n_clicks)
+def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership):
+    if (wit and wit_company and mit and wit_leadership and mit_leadership):
+        print('writing new company')
+        data_fabricator.populate_employee_db(int(wit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(mit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(wit_leadership), "VP", 225000, 400000, 5, 10, "Female", wit_company, leadership = True)
+        data_fabricator.populate_employee_db(int(mit_leadership), "VP", 225000, 500000, 5, 10, "Female", wit_company, leadership = True)
+
 
 @app.callback(Output("positions-list", "children"),
     [Input("add-position-salary","n_clicks")],
@@ -78,22 +83,29 @@ def save_data(n_clicks):
 def add_position(n_clicks, children):
     if n_clicks != None and n_clicks > 0:
         if not children:
-            print('no children')
-            print('children', children)
             return html_utils.salary("Software Engineer")
         else:
-            print('keys', len(children.keys()))
             return html.Div([
                 children,
                 html_utils.salary("Software Engineer")])
-    print('n_clicks is none')
 
 @app.callback(
     Output("score", "children"),
     [Input("company_selector", "value")]
 )
 def score_callback(company):
-    return 95.00 if company == "Pinterest" else 52.00
+    result = {'Google': 95.00, 'Pinterest': 52.00}
+    if company in result:
+        return result[company]
+    else:
+        return Math.randInt()*100.0
+
+@app.callback(
+    Output("company_selector", "options"),
+    [Input('save-data', 'n_clicks')])
+def get_companies(options):
+    print('in here alice')
+    return [{'label': i, 'value': i} for i in db_utils.get_companies()]
 
 @app.callback(
     Output("pct_women_label", "children"),
@@ -137,8 +149,11 @@ def pct_women_leader_pie_callback(company):
     [Input("company_selector", "value")]
 )
 def score_pie_callback(company):
-    scores = {"Pinterest": 95, "Google": 52, "LinkedIn": 74, "Workday": 81}
-    score = scores.get(company)
+    scores = {"Pinterest": 95, "Google": 52}
+    if company in scores:
+        score = scores.get(company)
+    else:
+        Math.randInt()*100
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)
