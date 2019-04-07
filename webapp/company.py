@@ -38,7 +38,7 @@ def render_content(tab, company):
         content = [
             html.Div(
                 [
-                 create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 80, width = 90)
+                 create_chart("{0} Scores".format(company), "company_scores", size = "twelve", height = 80, width = 98, title_position="top")
                  ],
                  className="row"
             )
@@ -46,7 +46,7 @@ def render_content(tab, company):
     elif tab == 'tab-2':
         content = html.Div(
             [
-             create_chart("Leaderboard", "leaderboard", size = "twelve", height = 80)
+             create_chart("Leaderboard", "leaderboard", size = "twelve", height = 80, title_position="top")
              ],
              className="row"
         )

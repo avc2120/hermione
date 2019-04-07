@@ -19,11 +19,19 @@ from chart_utils import donut_chart
 
 charts = html.Div(
     [
-        html.Div([
-            html.Img(src='assets/gold-certified.png', style={"width": "265px", "margin-top": "20px"}),
-            html.H3("Gold Certified", style={"color":"white", "text-align":"center"})],
-            className="certification",
-            style={"backgroundColor": "#593196", "width": "268px", "border-radius":"3px"}),
+        html.Div(
+            [
+                html.Div("0", id="score", className="score_number"),
+                html.Div(
+                    [
+                        html.Img(src='assets/certified.png', className="certification_image")
+                    ],
+                    className="overlay_image"
+                )
+            ],
+            #html.H3("Gold Certified", style={"color":"white", "text-align":"center"})],
+            className="three columns overlay_container",
+            style={"backgroundColor": "#593196"}),
         create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
         # create_chart("% Average Salary", "pct_avg_salary"),
@@ -99,7 +107,7 @@ def pct_women_leader_pie_callback(company):
     [Input("company_selector", "value")]
 )
 def score_pie_callback(company):
-    scores = {"Pinterest": 52, "Google": 60, "LinkedIn": 74, "Workday": 81}
+    scores = {"Pinterest": 95, "Google": 60, "LinkedIn": 74, "Workday": 81}
     score = scores.get(company)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])

@@ -8,10 +8,47 @@ https://cdn.rawgit.com/plotly/dash-app-stylesheets/2d266c578d2a6e8850ebce48fdb52
 /*
 Custom CSS - DO NOT DELETE
 */
+.overlay_container{
+  position: relative;
+}
 
-.chart-title{
+.overlay_container .image {
+  opacity: 1;
+}
+
+.overlay_container .middle {
+  opacity: 1;
+}
+
+.certification_image{
+  opacity: 1;
+  max-width: 50%;
+  transform: rotate(-20deg);
+}
+
+.overlay_image {
+  position:absolute;
+  top: 1%;
+  left: 1%;
+}
+
+.score_number{
+  font-size:10vw;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  margin-top: 10%;
+}
+
+.chart-title-top{
   text-align: center;
   margin-top: 1%;
+  font-size: 1.20vw;
+}
+
+.chart-title-bottom{
+  text-align: center;
+  margin-top: 5%;
   font-size: 1.20vw;
 }
 

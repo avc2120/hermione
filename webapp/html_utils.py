@@ -63,19 +63,26 @@ def dropdown_menu(id, items, clearable=False, className="two columns"):
         className=className,
 
     )
+def create_chart(title, id, size = "three", height = 80, width = 98, default_figure = { 'data': [], 'layout': []}, title_position="bottom"):
 
-def create_chart(title, id, size = "three", height = 80, width = 98, default_figure = { 'data': [], 'layout': []}):
+    title_h4 = html.H4(title, className="chart-title-{0}".format(title_position),style={"height": "10%", "width": "{0}%".format(width)})
+    children = [
+        dcc.Graph(
+            id=id,
+            style={"height": "{0}%".format(height), "width": "{0}%".format(width)},
+            config=dict(displayModeBar=False),
+            animate=True,
+            figure=default_figure
+        )
+    ]
+
+    if title_position == "bottom":
+        children.append(title_h4)
+    else:
+        children.insert(0, title_h4)
+
     return html.Div(
-            [
-                html.H4(title, className="chart-title",style={"height": "10%", "width": "{0}%".format(width)}),
-                dcc.Graph(
-                    id=id,
-                    style={"height": "{0}%".format(height), "width": "{0}%".format(width)},
-                    config=dict(displayModeBar=False),
-                    animate=True,
-                    figure=default_figure
-                )
-            ],
+            children=children,
             className="{0} columns chart_div".format(size),
             # style={"height": "{0}%".format(height)}
         )
