@@ -85,20 +85,7 @@ def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership, m
         data_fabricator.populate_employee_db(int(mit_leadership), "Manager", 225000, 500000, 5, 10, "Male", wit_company, leadership = True)
     if (wit_company and maternity_weeks and paternity_weeks):
         #score = maternity_weeks * .25 + paternity_weeks * .30 + lactation_rooms * .10 + mother_parking * .20 + gender_neutral_bathrooms * .10 + feminine_products * .05
-        db_utils.add_company(wit_company, maternity_weeks/25, paternity_weeks/30, 50.00, 100.00, 4, 10, 52)
-
-@app.callback(Output("positions-list", "children"),
-    [Input("add-position-salary","n_clicks")],
-    [State("positions-list", "children")]
-    )
-def add_position(n_clicks, children):
-    if n_clicks != None and n_clicks > 0:
-        if not children:
-            return html_utils.salary("Software Engineer")
-        else:
-            return html.Div([
-                children,
-                html_utils.salary("Software Engineer")])
+        db_utils.add_company(wit_company, maternity_weeks/25, paternity_weeks/30, 50.00, 100.00, 40.00, 100.00, 52)
 
 @app.callback(
     Output("score", "children"),
@@ -123,7 +110,8 @@ def score_callback(company):
 @app.callback(
     Output("company_selector", "options"),
     [Input('save-data', 'n_clicks')])
-def get_companies(options):
+def get_companies(click):
+    print("in here yo")
     return [{'label': i, 'value': i} for i in db_utils.get_companies()]
 
 @app.callback(
@@ -159,7 +147,7 @@ def pct_women_leader_pie_callback(company):
     # this is hardcoded because female is always the first row
     female_count = dataframe.at[0, 'total']
     male_count = dataframe.at[1, 'total']
-    percentage_label = "{0}%".format(round(female_count/(female_count + male_count) * 100))
+    percentage_label = "{0}%".format(int(round(female_count/(female_count + male_count) * 100)))
     colors = ["#593196", "#eaeaea"]
     return donut_chart(dataframe, colors, percentage_label)
 
@@ -169,6 +157,7 @@ def pct_women_leader_pie_callback(company):
 )
 def score_pie_callback(company, title):
     dataframe = db_utils.get_yoe_df(company = company, title = title)
+    print(dataframe)
     female_count = dataframe.at[0, 'avg_1']
     male_count = dataframe.at[1, 'avg_1']
     percentage_label = "{0}%".format(int(round(female_count/(female_count + male_count) * 100)))
