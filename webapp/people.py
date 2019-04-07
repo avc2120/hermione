@@ -17,6 +17,7 @@ import base64
 from app import app
 from html_utils import indicator, df_to_table, create_chart
 from chart_utils import donut_chart
+import random
 
 charts = html.Div(
     [
@@ -75,13 +76,14 @@ layout = [
 def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership, maternity_weeks, paternity_weeks):
     if (wit and wit_company and mit and wit_leadership and mit_leadership):
         print('writing new company')
-        data_fabricator.populate_employee_db(int(wit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
-        data_fabricator.populate_employee_db(int(mit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
-        data_fabricator.populate_employee_db(int(wit_leadership), "VP", 225000, 400000, 5, 10, "Female", wit_company, leadership = True)
-        data_fabricator.populate_employee_db(int(mit_leadership), "VP", 225000, 500000, 5, 10, "Female", wit_company, leadership = True)
+        data_fabricator.populate_employee_db(int(wit), "Software Engineer 1", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(mit), "Software Engineer 1", 125000, 200000, 1, 5, "Male", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(wit), "Software Engineer 4", 165000, 240000, 1, 5, "Female", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(mit), "Software Engineer 4", 165000, 240000, 1, 5, "Male", wit_company, leadership = False)
+        data_fabricator.populate_employee_db(int(wit_leadership), "Manager", 225000, 400000, 5, 10, "Female", wit_company, leadership = True)
+        data_fabricator.populate_employee_db(int(mit_leadership), "Manager", 225000, 500000, 5, 10, "Male", wit_company, leadership = True)
     if (wit_company and maternity_weeks and paternity_weeks):
         db_utils.add_company(wit_company, maternity_weeks, paternity_weeks, 5, 10, 4, 10, 52)
-
 
 @app.callback(Output("positions-list", "children"),
     [Input("add-position-salary","n_clicks")],
@@ -105,7 +107,7 @@ def score_callback(company):
     if company in result:
         return result[company]
     else:
-        return Math.randInt(0,100)
+        return random.randint(0,100)
 
 @app.callback(
     Output("company_selector", "options"),
@@ -160,7 +162,7 @@ def score_pie_callback(company):
     if company in scores:
         score = scores.get(company)
     else:
-        Math.randInt(0,100)
+        score = random.randint(0,100)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)
