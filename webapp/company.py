@@ -13,8 +13,7 @@ from chart_utils import bar_chart, stacked_bar_chart
 layout = [ html.Div([ html.Div([
     dcc.Tabs(id="tabs", value='tab-1', children=[
         dcc.Tab(label='My Company', value='tab-1', id="company_name"),
-        dcc.Tab(label='Leaderboard', value='tab-2'),
-        dcc.Tab(label='Action Items', value='tab-3'),
+        dcc.Tab(label='Leaderboard', value='tab-2')
     ], className="row"),
     html.Div(id='tabs-content')
     ])

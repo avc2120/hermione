@@ -91,7 +91,7 @@ dropdownTitles = html.Div(
 
 dropdownMenus = html.Div(
     [
-        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest", "LinkedIn", "Workday"]),
+        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest"]),
         html_utils.dropdown_menu("title_selector", ["All", "Software Engineer 1", "Software Engineer 4", "Manager"])
     ],
     className="row",

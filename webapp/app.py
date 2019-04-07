@@ -23,6 +23,7 @@ external_stylesheets = [
 ]
 
 server = Flask(__name__)
+# https://github.com/facultyai/dash-bootstrap-components/blob/master/dash_bootstrap_components/themes.py
 app = dash.Dash(__name__, server=server, external_scripts=external_scripts, external_stylesheets=[dbc.themes.PULSE])
 app.config.suppress_callback_exceptions = True
 app.title = "Project Hermione"

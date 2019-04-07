@@ -12,15 +12,21 @@ import plotly.plotly as py
 from plotly import graph_objs as go
 import db_utils
 import html_utils
+import base64
 from app import app
 from html_utils import indicator, df_to_table, create_chart
 from chart_utils import donut_chart
 
 charts = html.Div(
     [
+        html.Div([
+            html.Img(src='assets/gold-certified.png', style={"width": "265px", "margin-top": "20px"}),
+            html.H3("Gold Certified", style={"color":"white", "margin-left":"55px"})],
+            className="certification",
+            style={"backgroundColor": "#593196", "width": "268px", "border-radius":"3px"}),
         create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
-        create_chart("% Average Salary", "pct_avg_salary"),
+        # create_chart("% Average Salary", "pct_avg_salary"),
         create_chart("% Women in Leadership", "pct_women_leader_pie"),
     ],
     className="row",
