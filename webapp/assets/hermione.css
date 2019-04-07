@@ -261,6 +261,10 @@ there.
     text-align: center;
 }
 
+#positions-list{
+  height: 50px;
+}
+
 td{
     text-align: left;
     padding: 0px;
@@ -297,4 +301,12 @@ table{
 
 .certified-text {
   color:white;
+}
+
+.salary-item {
+  height:80px;
+}
+
+.modal-body {
+  overflow:scroll;
 }

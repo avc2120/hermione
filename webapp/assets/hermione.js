@@ -1,9 +1,9 @@
 // alert('js attached');
 $(document).ready(function(e) {
-    $(".add-position").click(function() {
-        // console.log('button clicked');
-        $(".positions-list").append('<div class="form-group"><label>Add Diversity Program/Partnership</label><input type="text" class="form-control" class="partnership" placeholder="" required></div>');
-    });
+    window.setInterval(function() {
+      var elem = document.getElementById('modal-body');
+      elem.scrollTop = elem.scrollHeight;
+    }, 5000);
 
     $("#fileToLoad").click(function () {
      var fileToLoad = document.getElementById("fileToLoad").files[0];

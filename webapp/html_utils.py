@@ -58,6 +58,30 @@ def form_group(fieldName, placeholder):
         dcc.Input(type="text", placeholder=placeholder, className="form-control")
         ], className="form-group")
 
+def upload():
+    return html.Div([
+        html.Div([
+            html.Div([
+                dcc.Input(type="file", className="custom-file-input", id="inputGroupFile02"),
+                html.Label("Choose file", className="custom-file-label", htmlFor="inputGroupFile02")
+                ], className="custom-file"),
+            html.Div([
+                html.Span("Upload", className="input-group-text")
+                ], className="input-group-append")
+            ], className="input-group mb-3")
+        ], className="form-group")
+
+def salary(name):
+    return html.Div([
+        html.Label("Title: ", htmlFor="role"),
+        dcc.Input(type="text", placeholder="role", id="role", className="form-control", style={"width":"150px", "display":"inline", "margin-left":"20px"}),
+        dcc.Slider(
+        min=0,
+        max=9,
+        marks={1:'100,000', 2:'125,000', 3:'150,000', 4:'175,000', 5:'200,000', 6:'250,000', 7:'300,000', 8:'400,000'},
+        value=9,
+    )], className="salary-item")
+
 def dropdown_menu(id, items, clearable=False, className="two columns"):
     return html.Div(
         dcc.Dropdown(

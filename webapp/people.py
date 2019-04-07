@@ -58,6 +58,36 @@ layout = [
     charts
 ]
 
+# @app.callback(
+#     Output("position-salaries", "children"),
+#     [Input("add-position", "n_clicks")])
+# def add_position(n_clicks, existing_fields):
+#     if n_clicks == 1:
+#         return html_utils.salary("Software Engineer")
+
+@app.callback(Output("placeholder-list","children"),
+    [Input("save-data","n_clicks")]
+    )
+def save_data(n_clicks):
+    print(n_clicks)
+
+@app.callback(Output("positions-list", "children"),
+    [Input("add-position-salary","n_clicks")],
+    [State("positions-list", "children")]
+    )
+def add_position(n_clicks, children):
+    if n_clicks != None and n_clicks > 0:
+        if not children:
+            print('no children')
+            print('children', children)
+            return html_utils.salary("Software Engineer")
+        else:
+            print('keys', len(children.keys()))
+            return html.Div([
+                children,
+                html_utils.salary("Software Engineer")])
+    print('n_clicks is none')
+
 @app.callback(
     Output("score", "children"),
     [Input("company_selector", "value")]
@@ -107,7 +137,7 @@ def pct_women_leader_pie_callback(company):
     [Input("company_selector", "value")]
 )
 def score_pie_callback(company):
-    scores = {"Pinterest": 95, "Google": 60, "LinkedIn": 74, "Workday": 81}
+    scores = {"Pinterest": 95, "Google": 52, "LinkedIn": 74, "Workday": 81}
     score = scores.get(company)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])

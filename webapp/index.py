@@ -8,6 +8,7 @@ from app import app
 import people
 import company
 import html_utils
+from html_utils import salary
 
 # app.css.config.serve_locally = True
 # app.scripts.config.serve_locally = False
@@ -81,15 +82,20 @@ modal = html.Div([
         html.Form([
           html.Fieldset([
             html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
-            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
-            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
-            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech")
-            ])
+            html_utils.form_group("Number of Men in Tech", "Enter Number of Men in Tech"),
+            html_utils.form_group("Number of Women in Tech Leadership", "Enter Number of Women in Tech Leadership"),
+            html_utils.form_group("Number of Men in Tech Leadership", "Enter Number of Men in Tech Leadership"),
+            html_utils.upload(),
+            html.Div([], id="positions-list"),
+            # html.Button("Add Position Salary", className="btn btn-outline-primary", id="add-position")
+            ], id="hermione-fieldset")
           ])
         ], className="modal-body"),
       html.Div([
-        html.Button("Save", className="btn btn-primary"),
-        dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>''')
+        html.Div([], id="placeholder-list"),
+        html.Button("Add Position Salary", className="btn btn-primary", id="add-position-salary"),
+        html.Button("Save", className="btn btn-secondary", **{"data-dismiss":"modal"}, id="save-data")
+        # dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<button id="save-data" type="button" class="btn btn-secondary" data-dismiss="modal">Save</button>''')
         ], className="modal-footer")
       ], className="modal-content")
     ],className="modal-dialog", style={"width": "1250px"})
