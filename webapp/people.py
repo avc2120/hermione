@@ -26,18 +26,20 @@ charts = html.Div(
                 html.Div("0", id="score", className="score_number"),
                 html.Div(
                     [
-                        html.Img(src='assets/certified.png', className="certification_image")
+                        html.Img(src='assets/certified.png', className="certification_image", id="certification_image")
                     ],
                     className="overlay_image"
-                )
+                ),
+                html.Div("Overall Score", className="score_title")
             ],
             #html.H3("Gold Certified", style={"color":"white", "text-align":"center"})],
             className="three columns overlay_container",
             style={"backgroundColor": "#593196"}),
-        create_chart("Overall Score", "score_pie"),
         create_chart("% Women", "pct_women_pie"),
         # create_chart("% Average Salary", "pct_avg_salary"),
         create_chart("% Women in Leadership", "pct_women_leader_pie"),
+        create_chart("Overall Score", "score_pie"),
+
     ],
     className="row",
 )
@@ -83,7 +85,8 @@ def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership, m
         data_fabricator.populate_employee_db(int(wit_leadership), "Manager", 225000, 400000, 5, 10, "Female", wit_company, leadership = True)
         data_fabricator.populate_employee_db(int(mit_leadership), "Manager", 225000, 500000, 5, 10, "Male", wit_company, leadership = True)
     if (wit_company and maternity_weeks and paternity_weeks):
-        db_utils.add_company(wit_company, maternity_weeks, paternity_weeks, 5, 10, 4, 10, 52)
+        #score = maternity_weeks * .25 + paternity_weeks * .30 + lactation_rooms * .10 + mother_parking * .20 + gender_neutral_bathrooms * .10 + feminine_products * .05
+        db_utils.add_company(wit_company, maternity_weeks/25, paternity_weeks/30, 50.00, 100.00, 4, 10, 52)
 
 @app.callback(Output("positions-list", "children"),
     [Input("add-position-salary","n_clicks")],
@@ -104,6 +107,19 @@ def add_position(n_clicks, children):
 )
 def score_callback(company):
     return db_utils.get_score_for_company(company)
+
+@app.callback(
+    Output("certification_image", "style"),
+    [Input("company_selector", "value")]
+)
+def score_callback(company):
+    active = db_utils.get_score_for_company(company) > 70
+    return {
+        "opacity": "1",
+        "max-width": "50%",
+        "transform": "rotate(-20deg)",
+        "display": "block" if active else "none"
+    }
 
 @app.callback(
     Output("company_selector", "options"),

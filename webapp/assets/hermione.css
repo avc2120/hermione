@@ -12,11 +12,15 @@ Custom CSS - DO NOT DELETE
   position: relative;
 }
 
-.overlay_container .image {
+.overlay_container .overlay_image {
   opacity: 1;
 }
 
-.overlay_container .middle {
+.overlay_container .score_number {
+  opacity: 1;
+}
+
+.overlay_container .score_title {
   opacity: 1;
 }
 
@@ -37,7 +41,18 @@ Custom CSS - DO NOT DELETE
   font-weight: bold;
   color: white;
   text-align: center;
-  margin-top: 10%;
+  margin-top: 5%;
+}
+
+.score_title{
+  position: absolute;
+  font-size:1.5vw;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+  top: 82%;
+  left: 25%;
+  max-width: 75%;
 }
 
 .chart-title-top{
