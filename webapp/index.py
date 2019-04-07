@@ -70,67 +70,93 @@ dropdownMenus = html.Div(
     style={"marginBottom": "10"}
 )
 
+modal = html.Div([
+  html.Div([
+    html.Div([
+      html.Div([
+        html.H4("Report", className="modal-title"),
+        dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<button type="button" class="close" data-dismiss="modal">&times;</button>''')
+        ], className="modal-header"),
+      html.Div([
+        html.Form([
+          html.Fieldset([
+            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
+            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
+            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech"),
+            html_utils.form_group("Number of Women in Tech", "Enter Number of Women in Tech")
+            ])
+          ])
+        ], className="modal-body"),
+      html.Div([
+        html.Button("Save", className="btn btn-primary"),
+        dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>''')
+        ], className="modal-footer")
+      ], className="modal-content")
+    ],className="modal-dialog", style={"width": "1250px"})
+  ],className="modal", id="myModal")
+
 body = html.Div(
     [
         dropdownTitles,
         dropdownMenus,
         html.Span([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<form class="form-inline my-2 my-lg-0 report-statistics">
         <a class="btn btn-secondary my-2 my-sm-0" style="display:inline-block" data-toggle="modal" data-target="#myModal">Report Statistics</a>
-      </form>
-    <div class="modal" id="myModal">
-    <div class="modal-dialog" style="width:1250px;">
-      <div class="modal-content">
+      </form>''')]),
+  #   <div class="modal" id="myModal">
+  #   <div class="modal-dialog" style="width:1250px;">
+  #     <div class="modal-content">
 
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Report</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
+  #       <!-- Modal Header -->
+  #       <div class="modal-header">
+  #         <h4 class="modal-title">Report</h4>
+  #         <button type="button" class="close" data-dismiss="modal">&times;</button>
+  #       </div>
 
-        <!-- Modal body -->
-        <div class="modal-body modal-body-1">
-          <form>
-            <fieldset>
-              <div class="form-group">
-                <label>Company Name</label>
-                <input type="text" class="form-control" id="modal_company_name" placeholder="Enter the company name" required>
-              </div>
-              <div class="form-group">
-                <label>Number of Women in Tech</label>
-                 <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
-              </div>
-              <div class="form-group">
-                <label>Number of Men in Tech</label>
-                 <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
-              </div>
-             <div class="form-group">
-                <label>Number of Women in Tech in Leadership</label>
-                 <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
-              </div>
-            <div class="form-group">
-                <label>Number of Men in Tech in Leadership</label>
-                 <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
-              </div>
-              <div class="positions-list">
+  #       <!-- Modal body -->
+  #       <div class="modal-body modal-body-1">
+  #         <form>
+  #           <fieldset>
+  #             <div class="form-group">
+  #               <label>Company Name</label>
+  #               <input type="text" class="form-control" id="modal_company_name" placeholder="Enter the company name" required>
+  #             </div>
+  #             <div class="form-group">
+  #               <label>Number of Women in Tech</label>
+  #                <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
+  #             </div>
+  #             <div class="form-group">
+  #               <label>Number of Men in Tech</label>
+  #                <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
+  #             </div>
+  #            <div class="form-group">
+  #               <label>Number of Women in Tech in Leadership</label>
+  #                <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
+  #             </div>
+  #           <div class="form-group">
+  #               <label>Number of Men in Tech in Leadership</label>
+  #                <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
+  #             </div>
+  #             <div class="positions-list">
 
-              </div>
-             <button type="button" class="btn btn-outline-primary add-position">Add Diversity Program</button>
-             <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileToLoad">
+  #             </div>
+  #            <button type="button" class="btn btn-outline-primary add-position">Add Diversity Program</button>
+  #            <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileToLoad">
 
-              <div class="form-group">
-              </div>
-            </fieldset>
-          </form>
-        </div>
-         <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" id="hack-next">Next</button>
-          <button type="button" class="btn btn-primary collapse" id="modal-close-button" data-dismiss="modal">Close</button>
-        </div>
+  #             <div class="form-group">
+  #             </div>
+  #           </fieldset>
+  #         </form>
+  #       </div>
+  #        <!-- Modal footer -->
+  #       <div class="modal-footer">
+  #         <button type="button" class="btn btn-primary" id="hack-next">Next</button>
+  #         <button type="button" class="btn btn-primary collapse" id="modal-close-button" data-dismiss="modal">Close</button>
+  #       </div>
 
-      </div>
-    </div>
-  </div>''')]),
+  #     </div>
+  #   </div>
+  # </div>''')]),
+        modal,
         html.Div(id="people_row", children=people.layout, style={"marginBottom": "10"}),
         html.Div(id="company_row", children=company.layout)
     ],

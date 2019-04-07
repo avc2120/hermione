@@ -52,6 +52,12 @@ def nav_list_item(children, active=False):
         className="nav-item {0}".format("active" if active else "")
     )
 
+def form_group(fieldName, placeholder):
+    return html.Div([
+        html.Label(fieldName),
+        dcc.Input(type="text", placeholder=placeholder, className="form-control")
+        ], className="form-group")
+
 def dropdown_menu(id, items, clearable=False, className="two columns"):
     return html.Div(
         dcc.Dropdown(
