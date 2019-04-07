@@ -36,10 +36,9 @@ charts = html.Div(
             className="three columns overlay_container",
             style={"backgroundColor": "#593196"}),
         create_chart("% Women", "pct_women_pie"),
+        create_chart("% YOE Women vs Men", "yoe_pie"),
         # create_chart("% Average Salary", "pct_avg_salary"),
-        create_chart("% Women in Leadership", "pct_women_leader_pie"),
-        create_chart("Overall Score", "score_pie"),
-
+        create_chart("% Women in Leadership", "pct_women_leader_pie")
     ],
     className="row",
 )
@@ -165,14 +164,14 @@ def pct_women_leader_pie_callback(company):
     return donut_chart(dataframe, colors, percentage_label)
 
 @app.callback(
-    Output("score_pie", "figure"),
-    [Input("company_selector", "value")]
+    Output("yoe_pie", "figure"),
+    [Input("company_selector", "value"), Input("title_selector", "value")]
 )
-def score_pie_callback(company):
-    score = db_utils.get_score_for_company(company)
-    data = [["score", score], ["not_score", (100 - score)]]
-    dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
-    percentage_label = "{0}".format(score)
+def score_pie_callback(company, title):
+    dataframe = db_utils.get_yoe_df(company = company, title = title)
+    female_count = dataframe.at[0, 'avg_1']
+    male_count = dataframe.at[1, 'avg_1']
+    percentage_label = "{0}%".format(int(round(female_count/(female_count + male_count) * 100)))
     colors = ["#593196", "#eaeaea"]
     return donut_chart(dataframe, colors, percentage_label)
 

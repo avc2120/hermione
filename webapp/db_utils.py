@@ -134,6 +134,16 @@ def get_women_pct_df(company = "All", title = "All", leadership = False):
         query = query.filter(Employee.leadership == True)
     return pd.read_sql_query(query.group_by(Employee.gender).statement, db.engine)
 
+def get_yoe_df(company = "All", title = "All", leadership = False):
+    query = db.session.query(Employee.gender, db.func.avg(Employee.yoe))
+    if company != "All":
+        query = query.filter(Employee.company == company)
+    if title != "All":
+        query = query.filter(Employee.title == title)
+    if leadership == True:
+        query = query.filter(Employee.leadership == True)
+    return pd.read_sql_query(query.group_by(Employee.gender).statement, db.engine)
+
 def create_all_tables():
     # statement here to create all the tables
     db.create_all()
