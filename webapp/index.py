@@ -163,8 +163,9 @@ body = html.Div(
         html.Div(id="company_row", children=company.layout)
     ],
     style={
-        "margin": "2%"
-    }
+        "margin": "2%", "margin-left":"100px"
+    },
+    className="hermione-body"
 )
 
 app.layout = html.Div(

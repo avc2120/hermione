@@ -64,17 +64,18 @@ def dropdown_menu(id, items, clearable=False, className="two columns"):
 
     )
 
-def create_chart(title, id, size = "three", height = 80, default_figure = { 'data': [], 'layout': []}):
+def create_chart(title, id, size = "three", height = 80, width = 98, default_figure = { 'data': [], 'layout': []}):
     return html.Div(
             [
-                html.H4(title, className="chart-title",style={"height": "10%", "width": "98%"}),
+                html.H4(title, className="chart-title",style={"height": "10%", "width": "{0}%".format(width)}),
                 dcc.Graph(
                     id=id,
-                    style={"height": "{0}%".format(height), "width": "98%"},
+                    style={"height": "{0}%".format(height), "width": "{0}%".format(width)},
                     config=dict(displayModeBar=False),
                     animate=True,
                     figure=default_figure
                 )
             ],
-            className="{0} columns chart_div".format(size)
+            className="{0} columns chart_div".format(size),
+            # style={"height": "{0}%".format(height)}
         )

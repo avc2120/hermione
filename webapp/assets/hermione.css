@@ -249,3 +249,15 @@ table{
 .chart_div {
   border: none;
 }
+
+#people_row {
+  margin-top:10px;
+}
+
+#company_row {
+  width:90%;
+}
+
+.hermione-body {
+  "margin-left":100px;
+}
