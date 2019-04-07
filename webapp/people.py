@@ -93,7 +93,8 @@ def pct_women_leader_pie_callback(company):
     [Input("company_selector", "value")]
 )
 def score_pie_callback(company):
-    score = 95 if company == "Pinterest" else 52
+    scores = {"Pinterest": 52, "Google": 60, "LinkedIn": 74, "Workday": 81}
+    score = scores.get(company)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)

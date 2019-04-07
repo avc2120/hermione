@@ -9,8 +9,8 @@ import people
 import company
 import html_utils
 
-app.css.config.serve_locally = True
-app.scripts.config.serve_locally = False
+# app.css.config.serve_locally = True
+# app.scripts.config.serve_locally = False
 
 
 #### NOTE: THIS IS NOT IN USE JUST HERE AS REFERENCE - MODIFY DASH_NAVBAR INSTEAD ####
@@ -91,7 +91,7 @@ dropdownTitles = html.Div(
 
 dropdownMenus = html.Div(
     [
-        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest"]),
+        html_utils.dropdown_menu("company_selector", ["Google", "Pinterest", "LinkedIn", "Workday"]),
         html_utils.dropdown_menu("title_selector", ["All", "Software Engineer 1", "Software Engineer 4", "Manager"])
     ],
     className="row",
@@ -102,8 +102,8 @@ body = html.Div(
     [
         dropdownTitles,
         dropdownMenus,
-        html.Span([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<form class="form-inline my-2 my-lg-0">
-        <a class="btn btn-secondary my-2 my-sm-0" style="display:inline-block" data-toggle="modal" data-target="#myModal">Report Disease</a>
+        html.Span([dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<form class="form-inline my-2 my-lg-0 report-statistics">
+        <a class="btn btn-secondary my-2 my-sm-0" style="display:inline-block" data-toggle="modal" data-target="#myModal">Report Statistics</a>
       </form>
     <div class="modal" id="myModal">
     <div class="modal-dialog" style="width:1250px;">
@@ -128,28 +128,24 @@ body = html.Div(
                  <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
               </div>
               <div class="form-group">
-                <label>Age</label>
-                <input type="text" class="form-control" id="age" placeholder="Enter the age of the patient">
+                <label>Number of Men in Tech</label>
+                 <input type="text" class="form-control" id="modal_number_women" placeholder="Enter the number of women in tech" required>
               </div>
-              <div class="form-group">
-                <label>Hospital Location</label>
-                <small id="hospitalHelp" class="form-text text-muted">Select the gender of the patient</small>
-                <select class="custom-select" aria-describedby="hospitalHelp">
-                  <option value="smmc" selected="">Saint Mary's Medical Center</option>
-                  <option value="schc">Stanford Children's Health Center</option>
-                </select>
+             <div class="form-group">
+                <label>Number of Women in Tech in Leadership</label>
+                 <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
               </div>
+            <div class="form-group">
+                <label>Number of Men in Tech in Leadership</label>
+                 <input type="text" class="form-control" id="modal_number_women_leadership" placeholder="Enter the number of women in tech in leadership" required>
+              </div>
+              <div class="positions-list">
+
+              </div>
+             <button type="button" class="btn btn-outline-primary add-position">Add Diversity Program</button>
+             <input type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileToLoad">
 
               <div class="form-group">
-                <label>Date of first Symptoms</label>
-                <input type="text" id="datepicker" placeholder="Date" required>
-              </div>
-
-              <div class="form-group">
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                  <label class="custom-control-label" for="customSwitch1">Submit to CDC</label>
-                </div>
               </div>
             </fieldset>
           </form>

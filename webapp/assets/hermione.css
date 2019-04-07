@@ -241,3 +241,11 @@ table{
     font-size:13px;
     margin-top:1px
 }
+
+.report-statistics {
+  margin-left: -15px;
+}
+
+.chart_div {
+  border: none;
+}
