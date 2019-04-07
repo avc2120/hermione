@@ -307,6 +307,10 @@ table{
   height:80px;
 }
 
+.facility-item {
+  height:80px;
+}
+
 .modal-body {
   overflow:scroll;
 }

@@ -93,6 +93,8 @@ modal = html.Div([
             html_utils.form_group("Number of Women in Tech Leadership", "Enter Number of Women in Tech Leadership", "wit_lead"),
             html_utils.form_group("Number of Men in Tech Leadership", "Enter Number of Men in Tech Leadership", "mit_lead"),
             html_utils.upload(),
+            html_utils.facilities("Days of Maternity Leave"),
+            html_utils.facilities("Number of Nursing Rooms"),
             html.Div([], id="positions-list"),
             # html.Button("Add Position Salary", className="btn btn-outline-primary", id="add-position")
             ], id="hermione-fieldset")
@@ -102,7 +104,6 @@ modal = html.Div([
         html.Div([], id="placeholder-list"),
         html.Button("Add Position Salary", className="btn btn-primary", id="add-position-salary"),
         html.Button("Save", className="btn btn-secondary", **{"data-dismiss":"modal"}, id="save-data")
-        # dash_dangerously_set_inner_html.DangerouslySetInnerHTML('''<button id="save-data" type="button" class="btn btn-secondary" data-dismiss="modal">Save</button>''')
         ], className="modal-footer")
       ], className="modal-content")
     ],className="modal-dialog", style={"width": "1250px"})

@@ -71,6 +71,17 @@ def upload():
             ], className="input-group mb-3")
         ], className="form-group")
 
+def facilities(name):
+    return html.Div([
+        html.Label(name),
+        dcc.Slider(
+        id=name,
+        min=0,
+        max=9,
+        marks={1:'10', 2:'50', 3:'100', 4:'500', 5:'1000', 6:'2000', 7:'5000', 8:'10000'},
+        value=9,
+    )], className="facility-item")
+
 def salary(name):
     return html.Div([
         html.Label("Title: ", htmlFor="role"),
@@ -91,7 +102,6 @@ def dropdown_menu(id, items, clearable=False, className="two columns"):
             clearable=clearable,
         ),
         className=className,
-
     )
 def create_chart(title, id, size = "three", height = 80, width = 98, default_figure = { 'data': [], 'layout': []}, title_position="bottom"):
 
