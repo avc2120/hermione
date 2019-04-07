@@ -71,11 +71,11 @@ def upload():
             ], className="input-group mb-3")
         ], className="form-group")
 
-def facilities(name):
+def facilities(name, id):
     return html.Div([
         html.Label(name),
         dcc.Slider(
-        id=name,
+        id=id,
         min=0,
         max=9,
         marks={1:'10', 2:'50', 3:'100', 4:'500', 5:'1000', 6:'2000', 7:'5000', 8:'10000'},

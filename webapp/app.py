@@ -13,15 +13,6 @@ external_scripts = [
     {'src': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js'}
 ]
 
-external_stylesheets = [
-    {
-        'href': 'https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/flatly/bootstrap.min.css',
-        'rel': 'stylesheet',
-        'integrity': 'sha384-T5jhQKMh96HMkXwqVMSjF3CmLcL1nT9//tCqu9By5XSdj7CwR0r+F3LTzUdfkkQf',
-        'crossorigin': 'anonymous'
-    }
-]
-
 server = Flask(__name__)
 # https://github.com/facultyai/dash-bootstrap-components/blob/master/dash_bootstrap_components/themes.py
 app = dash.Dash(__name__, server=server, external_scripts=external_scripts, external_stylesheets=[dbc.themes.FLATLY])
@@ -32,9 +23,7 @@ server.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///:memory:"
 
 
 db = SQLAlchemy(server)
-
 import db_utils, data_fabricator
-
 db_utils.create_all_tables()
 data_fabricator.populate_db()
 

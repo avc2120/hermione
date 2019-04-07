@@ -59,21 +59,28 @@ layout = [
     charts
 ]
 
+# add_company(name, maternity_weeks, paternity_weeks, lactation_rooms, mother_parking, gender_neutral_bathrooms, feminine_products, score)
+
+
 @app.callback(Output("placeholder-list","children"),
     [Input("save-data","n_clicks")],
     [State("wit_company", "value"),
     State("wit", "value"),
     State("mit", "value"),
     State("wit_lead", "value"),
-    State("mit_lead", "value")]
+    State("mit_lead", "value"),
+    State("maternity_weeks", "value"),
+    State("paternity_weeks", "value")]
     )
-def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership):
+def save_data(n_clicks, wit_company, wit, mit, wit_leadership, mit_leadership, maternity_weeks, paternity_weeks):
     if (wit and wit_company and mit and wit_leadership and mit_leadership):
         print('writing new company')
         data_fabricator.populate_employee_db(int(wit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
         data_fabricator.populate_employee_db(int(mit), "Software Engineer", 125000, 200000, 1, 5, "Female", wit_company, leadership = False)
         data_fabricator.populate_employee_db(int(wit_leadership), "VP", 225000, 400000, 5, 10, "Female", wit_company, leadership = True)
         data_fabricator.populate_employee_db(int(mit_leadership), "VP", 225000, 500000, 5, 10, "Female", wit_company, leadership = True)
+    if (wit_company and maternity_weeks and paternity_weeks):
+        db_utils.add_company(wit_company, maternity_weeks, paternity_weeks, 5, 10, 4, 10, 52)
 
 
 @app.callback(Output("positions-list", "children"),
@@ -98,7 +105,7 @@ def score_callback(company):
     if company in result:
         return result[company]
     else:
-        return Math.randInt()*100.0
+        return Math.randInt(0,100)
 
 @app.callback(
     Output("company_selector", "options"),
@@ -153,7 +160,7 @@ def score_pie_callback(company):
     if company in scores:
         score = scores.get(company)
     else:
-        Math.randInt()*100
+        Math.randInt(0,100)
     data = [["score", score], ["not_score", (100 - score)]]
     dataframe = pd.DataFrame(data, columns = ["Label", "Score"])
     percentage_label = "{0}".format(score)

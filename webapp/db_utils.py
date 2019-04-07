@@ -4,6 +4,7 @@ from sqlalchemy import func
 from sqlalchemy import Column, ForeignKey, Integer, String, DateTime, Float, Boolean
 from app import db
 import pandas as pd
+import time
 
 ###########
 # Company #
@@ -80,27 +81,6 @@ class Employee(db.Model):
     def to_json(self):
         return json.dumps(self.to_dict())
 
-# class Info(db.Model):
-#     __tablename__ = 'info'
-#         id = Column(Integer, primary_key=True, unique=True, nullable=False)
-#         wit = Column(String(64))
-#         mit = Column(Integer)
-#         wit_leadership = Column(Integer)
-#         mit_leadership = Column(String(15))
-#         company = Column(String(50))
-
-#     def to_dict(self):
-#         data = {}
-#         data['wit'] = self.wit
-#         data['mit'] = self.mit
-#         data['wit_leadership'] = self.wit_leadership
-#         data['mit_leadership'] = self.mit_leadership
-#         data['company'] = self.company
-#         return data
-
-#     def to_json(self):
-#         return json.dumps(self.to_dict())
-
 def add_employee(title, salary, yoe, gender, company, leadership = False):
     employee = Employee(title = title, salary = salary, yoe = yoe, gender = gender, company = company, leadership = leadership)
     db.session.add(employee)
@@ -136,6 +116,7 @@ def get_women_pct(company = "All", title = "All"):
     return result
 
 def get_companies():
+    time.sleep(0.5)
     base_query = build_employee_query().with_entities(Employee.company).distinct().all()
     return [i[0] for i in base_query]
 
